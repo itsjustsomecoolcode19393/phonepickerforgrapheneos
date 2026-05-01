@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GrapheneOS Phone Picker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #ffffff;
+  --bg-secondary: #f7f7f5;
+  --bg-tertiary: #f0eeeb;
+  --text: #1a1a18;
+  --text-secondary: #5a5a56;
+  --text-tertiary: #9a9a94;
+  --border: rgba(0,0,0,0.08);
+  --border-strong: rgba(0,0,0,0.14);
+  --accent: #1a5fa8;
+  --accent-bg: #e8f0fb;
+  --accent-text: #0d3d72;
+  --green: #2d7d1e;
+  --green-bg: #e8f4e4;
+  --green-text: #1a4f10;
+  --amber: #9a5c00;
+  --amber-bg: #fdf0d8;
+  --amber-text: #6b3e00;
+  --red: #b02020;
+  --red-bg: #fce8e8;
+  --red-text: #7a1414;
+  --purple: #5b48cc;
+  --purple-bg: #eeedfb;
+  --purple-text: #362d8a;
+  --teal: #0d7a5a;
+  --teal-bg: #e0f4ec;
+  --teal-text: #084d38;
+  --radius: 10px;
+  --radius-sm: 6px;
+  --radius-pill: 100px;
+  --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.04);
+  --font: 'DM Sans', sans-serif;
+  --mono: 'DM Mono', monospace;
+}
+
+[data-theme="dark"] {
+  --bg: #141412;
+  --bg-secondary: #1e1e1b;
+  --bg-tertiary: #252521;
+  --text: #f0efe8;
+  --text-secondary: #a8a8a0;
+  --text-tertiary: #68685e;
+  --border: rgba(255,255,255,0.08);
+  --border-strong: rgba(255,255,255,0.14);
+  --accent: #4a8fd4;
+  --accent-bg: #0d2540;
+  --accent-text: #8bbfe8;
+  --green: #4aac38;
+  --green-bg: #0d2a08;
+  --green-text: #7ad468;
+  --amber: #d4880a;
+  --amber-bg: #2a1e04;
+  --amber-text: #e8b84a;
+  --red: #d44a4a;
+  --red-bg: #2a0d0d;
+  --red-text: #e88888;
+  --purple: #8878e8;
+  --purple-bg: #1a1640;
+  --purple-text: #b0a8f0;
+  --teal: #28b888;
+  --teal-bg: #0a2820;
+  --teal-text: #68d8b0;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--font);
+  background: var(--bg-tertiary);
+  color: var(--text);
+  min-height: 100vh;
+  font-size: 15px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* HEADER */
+.site-header {
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 56px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: var(--text);
+}
+
+.logo-mark {
+  width: 28px;
+  height: 28px;
+  background: var(--text);
+  border-radius: 7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-mark svg { fill: var(--bg); }
+
+.logo-text {
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+.logo-sub {
+  font-size: 13px;
+  color: var(--text-tertiary);
+  font-weight: 400;
+}
+
+.header-right { display: flex; align-items: center; gap: 12px; }
+
+.theme-btn {
+  width: 34px;
+  height: 34px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  transition: background 0.15s, border-color 0.15s;
+}
+.theme-btn:hover { background: var(--bg-tertiary); border-color: var(--border-strong); }
+
+/* MAIN LAYOUT */
+.main {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 4rem;
+}
+
+/* PAGE TITLE */
+.page-hero {
+  margin-bottom: 2rem;
+}
+
+.page-title {
+  font-size: 26px;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+  margin-bottom: 0.4rem;
+}
+
+.page-subtitle {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.info-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--amber-bg);
+  color: var(--amber-text);
+  font-size: 12px;
+  font-weight: 500;
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  margin-top: 0.75rem;
+}
+
+/* FILTER PANEL */
+.filter-panel {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+  margin-bottom: 1.25rem;
+  box-shadow: var(--shadow);
+}
+
+.filter-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 1rem;
+}
+
+.filter-group label {
+  display: block;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 5px;
+}
+
+select {
+  width: 100%;
+  padding: 7px 10px;
+  font-size: 13px;
+  font-family: var(--font);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--bg-secondary);
+  color: var(--text);
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' fill='none'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23999' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  padding-right: 28px;
+  transition: border-color 0.15s;
+}
+select:focus { outline: none; border-color: var(--accent); }
+
+.picks-label {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 8px;
+}
+
+.pick-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.chip {
+  padding: 5px 12px;
+  border-radius: var(--radius-pill);
+  font-size: 12px;
+  font-weight: 500;
+  font-family: var(--font);
+  cursor: pointer;
+  border: 1px solid var(--border-strong);
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+.chip:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-bg); }
+.chip.active { background: var(--accent-bg); border-color: var(--accent); color: var(--accent-text); }
+.chip.clear-chip { color: var(--text-tertiary); }
+.chip.clear-chip:hover { color: var(--red); border-color: var(--red); background: var(--red-bg); }
+
+/* LEGEND */
+.legend {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.legend-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* SECTION DIVIDER */
+.section-divider {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 0.5rem 0 0.6rem;
+  border-bottom: 1px solid var(--border);
+  margin: 0.5rem 0 0.75rem;
+  grid-column: 1 / -1;
+}
+
+/* RESULTS GRID */
+.results {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.empty-state {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--text-tertiary);
+  font-size: 14px;
+  background: var(--bg);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+}
+
+/* PHONE CARD */
+.phone-card {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem;
+  position: relative;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.phone-card:hover {
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-md);
+}
+
+.phone-card.featured {
+  border: 2px solid var(--accent);
+}
+
+.rec-tag {
+  position: absolute;
+  top: -1px;
+  right: 14px;
+  background: var(--accent);
+  color: white;
+  font-size: 10px;
+  font-weight: 500;
+  padding: 2px 9px;
+  border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+  letter-spacing: 0.02em;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.4rem;
+  gap: 8px;
+}
+
+.card-name {
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+}
+
+.card-price {
+  font-size: 12px;
+  color: var(--text-secondary);
+  font-family: var(--mono);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.card-sub {
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin-bottom: 0.65rem;
+}
+
+.badge-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-bottom: 0.65rem;
+}
+
+.badge {
+  font-size: 11px;
+  font-weight: 500;
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+}
+
+.badge-blue { background: var(--accent-bg); color: var(--accent-text); }
+.badge-green { background: var(--green-bg); color: var(--green-text); }
+.badge-amber { background: var(--amber-bg); color: var(--amber-text); }
+.badge-red { background: var(--red-bg); color: var(--red-text); }
+.badge-purple { background: var(--purple-bg); color: var(--purple-text); }
+.badge-teal { background: var(--teal-bg); color: var(--teal-text); }
+.badge-gray { background: var(--bg-tertiary); color: var(--text-secondary); border: 1px solid var(--border); }
+
+/* SCORE BARS */
+.score-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.score-label {
+  font-size: 11px;
+  color: var(--text-tertiary);
+  width: 88px;
+  flex-shrink: 0;
+}
+
+.score-track {
+  flex: 1;
+  height: 4px;
+  background: var(--bg-tertiary);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.score-fill {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 0.4s ease;
+}
+
+.fill-blue { background: var(--accent); }
+.fill-green { background: var(--green); }
+.fill-amber { background: var(--amber); }
+
+.score-num {
+  font-size: 11px;
+  color: var(--text-tertiary);
+  font-family: var(--mono);
+  width: 24px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+/* STAT GRID */
+.stat-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  margin-top: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.stat-cell {
+  background: var(--bg-secondary);
+  border-radius: var(--radius-sm);
+  padding: 6px 8px;
+}
+
+.stat-label {
+  font-size: 10px;
+  color: var(--text-tertiary);
+  margin-bottom: 1px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.stat-val {
+  font-size: 12px;
+  font-weight: 500;
+  font-family: var(--mono);
+  color: var(--text);
+}
+
+/* ASK BUTTON */
+.ask-btn {
+  width: 100%;
+  padding: 7px 12px;
+  font-size: 12px;
+  font-family: var(--font);
+  font-weight: 500;
+  color: var(--text-secondary);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.15s;
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  text-decoration: none;
+}
+.ask-btn:hover {
+  background: var(--accent-bg);
+  border-color: var(--accent);
+  color: var(--accent-text);
+}
+
+/* COUNT BAR */
+.results-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.results-count {
+  font-size: 12px;
+  color: var(--text-tertiary);
+}
+
+/* FOOTER */
+.site-footer {
+  text-align: center;
+  padding: 2rem 1.5rem;
+  font-size: 12px;
+  color: var(--text-tertiary);
+  border-top: 1px solid var(--border);
+  background: var(--bg);
+  margin-top: 3rem;
+}
+
+.site-footer a { color: var(--accent); text-decoration: none; }
+.site-footer a:hover { text-decoration: underline; }
+
+/* RESPONSIVE */
+@media (max-width: 640px) {
+  .filter-row { grid-template-columns: 1fr; }
+  .results { grid-template-columns: 1fr; }
+  .main { padding: 1.25rem 1rem 3rem; }
+  .page-title { font-size: 22px; }
+}
+
+/* TRANSITIONS */
+body, .site-header, .filter-panel, .phone-card, select {
+  transition: background-color 0.2s, border-color 0.2s, color 0.2s;
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <a class="logo" href="#">
+    <div class="logo-mark">
+      <svg width="14" height="14" viewBox="0 0 14 14"><path d="M7 0a7 7 0 100 14A7 7 0 007 0zm0 2a5 5 0 110 10A5 5 0 017 2zm0 2a3 3 0 100 6 3 3 0 000-6z"/></svg>
+    </div>
+    <div>
+      <div class="logo-text">GrapheneOS</div>
+      <div class="logo-sub">Phone Picker</div>
+    </div>
+  </a>
+  <div class="header-right">
+    <button class="theme-btn" id="themeBtn" title="Toggle dark mode" onclick="toggleTheme()">🌙</button>
+  </div>
+</header>
+
+<main class="main">
+
+  <div class="page-hero">
+    <h1 class="page-title">Find your GrapheneOS phone</h1>
+    <p class="page-subtitle">Every supported device — current Pixels, older bargains, and upcoming Motorola flagships — in one place. Filter by budget, use case, or support status.</p>
+    <div class="info-pill">
+      <span>⚡</span>
+      <span>Last updated May 2026 · Pixel 10 series fully stable · Motorola 2027 estimated</span>
+    </div>
+  </div>
+
+  <div class="filter-panel">
+    <div class="filter-row">
+      <div class="filter-group">
+        <label for="fBudget">Budget</label>
+        <select id="fBudget" onchange="filter()">
+          <option value="all">All prices</option>
+          <option value="budget">Under €350 (used)</option>
+          <option value="mid">€350 – €600</option>
+          <option value="high">€600 – €900</option>
+          <option value="premium">€900+</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label for="fAvail">Availability</label>
+        <select id="fAvail" onchange="filter()">
+          <option value="all">All</option>
+          <option value="now">Available now</option>
+          <option value="future">Coming 2027</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label for="fStatus">Support status</label>
+        <select id="fStatus" onchange="filter()">
+          <option value="all">All</option>
+          <option value="stable">Fully stable</option>
+          <option value="experimental">Experimental</option>
+          <option value="eol">End of life ⚠</option>
+          <option value="future">Upcoming</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="picks-label">Top picks for</div>
+    <div class="pick-chips" id="pickChips">
+      <button class="chip" data-pick="everyday" onclick="usePick(this,'everyday')">Everyday use</button>
+      <button class="chip" data-pick="budget" onclick="usePick(this,'budget')">Best value</button>
+      <button class="chip" data-pick="maxprivacy" onclick="usePick(this,'maxprivacy')">Max privacy</button>
+      <button class="chip" data-pick="camera" onclick="usePick(this,'camera')">Best camera</button>
+      <button class="chip" data-pick="compact" onclick="usePick(this,'compact')">Compact</button>
+      <button class="chip" data-pick="longevity" onclick="usePick(this,'longevity')">Longest support</button>
+      <button class="chip" data-pick="foldable" onclick="usePick(this,'foldable')">Foldable / flip</button>
+      <button class="chip" data-pick="refurb" onclick="usePick(this,'refurb')">Second hand</button>
+      <button class="chip clear-chip" onclick="clearPick()">✕ Clear</button>
+    </div>
+  </div>
+
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:var(--accent)"></div>Security</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--green)"></div>Support runway</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--amber)"></div>Value for money</div>
+  </div>
+
+  <div class="results-meta">
+    <div class="results-count" id="resultsCount">Showing all devices</div>
+  </div>
+
+  <div class="results" id="results"></div>
+
+</main>
+
+<footer class="site-footer">
+  <p>Data accurate as of May 2026. Always verify support status at <a href="https://grapheneos.org/releases" target="_blank">grapheneos.org/releases</a> before buying.</p>
+  <p style="margin-top:6px">Built with the <a href="https://grapheneos.org" target="_blank">GrapheneOS</a> community in mind.</p>
+</footer>
+
+<script>
+var phones = [
+  {
+    id:'p10', name:'Pixel 10', price:'€799 new', priceNum:799,
+    sub:'Best all-round GrapheneOS phone right now. Tensor G5, ultrasonic fingerprint, 5× optical zoom, 12GB RAM.',
+    avail:'now', status:'stable',
+    security:95, support:90, value:65,
+    badges:[{t:'Fully stable',c:'badge-green'},{t:'Tensor G5',c:'badge-blue'},{t:'12GB RAM',c:'badge-blue'}],
+    stats:{chip:'Tensor G5 (3nm)',ram:'12GB',updates:'Until 2032',size:'6.3"'},
+    cats:['everyday','maxprivacy','camera','longevity'],
+    featured:true, rec:'Top pick 2026'
+  },
+  {
+    id:'p10a', name:'Pixel 10a', price:'€499 new', priceNum:499,
+    sub:'Best value new phone. Flat back, big battery, €300 cheaper than the 10. GrapheneOS experimental but maturing fast.',
+    avail:'now', status:'experimental',
+    security:88, support:88, value:90,
+    badges:[{t:'Experimental',c:'badge-amber'},{t:'Tensor G4',c:'badge-blue'},{t:'Large battery',c:'badge-teal'}],
+    stats:{chip:'Tensor G4',ram:'8GB',updates:'Until 2032',size:'6.1"'},
+    cats:['everyday','budget','compact'],
+    featured:false, rec:'Best value new'
+  },
+  {
+    id:'p9', name:'Pixel 9', price:'€550–650 new / €350+ used', priceNum:600,
+    sub:'Proven stable support, excellent display and camera. A safe choice if you want current-gen without the Pixel 10 price.',
+    avail:'now', status:'stable',
+    security:90, support:80, value:75,
+    badges:[{t:'Fully stable',c:'badge-green'},{t:'Tensor G4',c:'badge-blue'}],
+    stats:{chip:'Tensor G4',ram:'12GB',updates:'Until 2031',size:'6.3"'},
+    cats:['everyday','longevity'],
+    featured:false
+  },
+  {
+    id:'p9pro', name:'Pixel 9 Pro', price:'€750–900 new / €500+ used', priceNum:825,
+    sub:'Top camera system, 16GB RAM. Worth the premium if photography matters to you.',
+    avail:'now', status:'stable',
+    security:92, support:80, value:65,
+    badges:[{t:'Fully stable',c:'badge-green'},{t:'Pro camera',c:'badge-teal'},{t:'16GB RAM',c:'badge-blue'}],
+    stats:{chip:'Tensor G4',ram:'16GB',updates:'Until 2031',size:'6.3"'},
+    cats:['camera','maxprivacy'],
+    featured:false
+  },
+  {
+    id:'p9profold', name:'Pixel 9 Pro Fold', price:'€1600+ new / €1000+ used', priceNum:1600,
+    sub:'Large tablet-style foldable. Excellent for running multiple profiles side by side. Premium price.',
+    avail:'now', status:'stable',
+    security:92, support:80, value:38,
+    badges:[{t:'Fully stable',c:'badge-green'},{t:'Foldable',c:'badge-purple'},{t:'8.0" inner',c:'badge-gray'}],
+    stats:{chip:'Tensor G4',ram:'16GB',updates:'Until 2031',size:'6.3" / 8.0"'},
+    cats:['foldable'],
+    featured:false
+  },
+  {
+    id:'p10pro', name:'Pixel 10 Pro', price:'€1099 new', priceNum:1099,
+    sub:'Best camera available on any GrapheneOS device. Tensor G5, three cameras, telephoto macro.',
+    avail:'now', status:'stable',
+    security:95, support:90, value:55,
+    badges:[{t:'Fully stable',c:'badge-green'},{t:'Tensor G5',c:'badge-blue'},{t:'Best camera',c:'badge-teal'}],
+    stats:{chip:'Tensor G5 (3nm)',ram:'16GB',updates:'Until 2032',size:'6.3"'},
+    cats:['camera','maxprivacy'],
+    featured:false
+  },
+  {
+    id:'p10profold', name:'Pixel 10 Pro Fold', price:'€1799 new', priceNum:1799,
+    sub:'Latest foldable. Tensor G5, huge inner display, longest update guarantee. Ideal multi-profile setup.',
+    avail:'now', status:'stable',
+    security:95, support:90, value:36,
+    badges:[{t:'Fully stable',c:'badge-green'},{t:'Foldable',c:'badge-purple'},{t:'Tensor G5',c:'badge-blue'}],
+    stats:{chip:'Tensor G5 (3nm)',ram:'16GB',updates:'Until 2032',size:'6.3" / 8.0"'},
+    cats:['foldable','maxprivacy','longevity'],
+    featured:false
+  },
+  {
+    id:'p8', name:'Pixel 8', price:'€250–350 used', priceNum:300,
+    sub:'The budget sweet spot. Still excellent security hardware, solid camera, proven long-term GrapheneOS support.',
+    avail:'now', status:'stable',
+    security:82, support:58, value:92,
+    badges:[{t:'Fully stable',c:'badge-green'},{t:'Great value',c:'badge-amber'}],
+    stats:{chip:'Tensor G3',ram:'8GB',updates:'Until 2028',size:'6.2"'},
+    cats:['budget','refurb','compact'],
+    featured:false, rec:'Budget pick'
+  },
+  {
+    id:'p8a', name:'Pixel 8a', price:'€250–350 used / €400 new', priceNum:320,
+    sub:'Best compact budget option. Nearly identical specs to Pixel 8, slightly newer. Great second hand.',
+    avail:'now', status:'stable',
+    security:82, support:62, value:90,
+    badges:[{t:'Fully stable',c:'badge-green'},{t:'Compact',c:'badge-teal'},{t:'Great value',c:'badge-amber'}],
+    stats:{chip:'Tensor G3',ram:'8GB',updates:'Until 2029',size:'6.1"'},
+    cats:['budget','compact','refurb'],
+    featured:false
+  },
+  {
+    id:'p7', name:'Pixel 7', price:'€100–180 used', priceNum:140,
+    sub:'Very tight budget option. Support ends October 2027 — only about 17 months left. Short runway.',
+    avail:'now', status:'stable',
+    security:72, support:28, value:65,
+    badges:[{t:'Ends Oct 2027',c:'badge-amber'},{t:'Short runway',c:'badge-gray'}],
+    stats:{chip:'Tensor G2',ram:'8GB',updates:'Oct 2027',size:'6.3"'},
+    cats:['refurb'],
+    featured:false
+  },
+  {
+    id:'p7a', name:'Pixel 7a', price:'€130–220 used', priceNum:175,
+    sub:'Compact and affordable. Support ends October 2027. Only buy if very cheap and you accept upgrading soon.',
+    avail:'now', status:'stable',
+    security:72, support:28, value:68,
+    badges:[{t:'Ends Oct 2027',c:'badge-amber'},{t:'Compact',c:'badge-teal'}],
+    stats:{chip:'Tensor G2',ram:'8GB',updates:'Oct 2027',size:'6.1"'},
+    cats:['refurb','compact'],
+    featured:false
+  },
+  {
+    id:'p6', name:'Pixel 6 / 6a', price:'€70–130 used', priceNum:100,
+    sub:'End of life October 2026 — only months away. Do not buy unless you fully accept no more security updates.',
+    avail:'now', status:'eol',
+    security:52, support:4, value:20,
+    badges:[{t:'EOL Oct 2026',c:'badge-red'},{t:'Avoid',c:'badge-red'}],
+    stats:{chip:'Tensor G1',ram:'8GB',updates:'Oct 2026 ⚠',size:'6.4"'},
+    cats:[],
+    featured:false
+  },
+  {
+    id:'moto-sig', name:'Motorola Signature 2027', price:'~€800–1000 est.', priceNum:900,
+    sub:'First expected non-Pixel GrapheneOS device. Snapdragon flagship, likely to ship with GrapheneOS pre-installed.',
+    avail:'future', status:'future',
+    security:90, support:85, value:60,
+    badges:[{t:'Coming 2027',c:'badge-purple'},{t:'Snapdragon',c:'badge-blue'},{t:'Estimated',c:'badge-gray'}],
+    stats:{chip:'Snapdragon (2027)',ram:'TBA',updates:'~7yr est.',size:'TBA'},
+    cats:['everyday','maxprivacy'],
+    featured:false, rec:'Watch this'
+  },
+  {
+    id:'moto-razrultra', name:'Motorola Razr Ultra 2027', price:'~€1200+ est.', priceNum:1200,
+    sub:'Flip foldable on GrapheneOS\'s own candidate list. Snapdragon, consumer-friendly form — the exciting wild card.',
+    avail:'future', status:'future',
+    security:88, support:82, value:42,
+    badges:[{t:'Coming 2027',c:'badge-purple'},{t:'Flip foldable',c:'badge-teal'},{t:'Estimated',c:'badge-gray'}],
+    stats:{chip:'Snapdragon (2027)',ram:'TBA',updates:'~7yr est.',size:'Flip form'},
+    cats:['foldable'],
+    featured:false, rec:'Flip option'
+  },
+  {
+    id:'moto-razrfold', name:'Motorola Razr Fold 2027', price:'~€1500+ est.', priceNum:1500,
+    sub:'Large tablet foldable on the candidate list. Enterprise-leaning, but may be consumer-available.',
+    avail:'future', status:'future',
+    security:88, support:82, value:35,
+    badges:[{t:'Coming 2027',c:'badge-purple'},{t:'Tablet fold',c:'badge-purple'},{t:'Estimated',c:'badge-gray'}],
+    stats:{chip:'Snapdragon (2027)',ram:'TBA',updates:'~7yr est.',size:'Tablet fold'},
+    cats:['foldable'],
+    featured:false
+  }
+];
+
+var activePick = null;
+var originalCats = phones.map(function(p){ return p.cats.slice(); });
+
+var pickMap = {
+  everyday:   ['p10','p10a','p9','moto-sig'],
+  budget:     ['p8','p8a','p10a'],
+  maxprivacy: ['p10','p10pro','p9pro','p10profold','moto-sig'],
+  camera:     ['p10pro','p9pro','p10'],
+  compact:    ['p10a','p8a','p7a','p8'],
+  longevity:  ['p10','p10pro','p10profold','p9'],
+  foldable:   ['p9profold','p10profold','moto-razrultra','moto-razrfold'],
+  refurb:     ['p8','p8a','p7','p7a']
+};
+
+function usePick(btn, key) {
+  document.querySelectorAll('.chip[data-pick]').forEach(function(c){ c.classList.remove('active'); });
+  btn.classList.add('active');
+  activePick = key;
+  var ids = pickMap[key];
+  phones.forEach(function(p, i) {
+    p.cats = ids.includes(p.id) ? ['__pick__'] : [];
+  });
+  document.getElementById('fBudget').value = 'all';
+  document.getElementById('fAvail').value = 'all';
+  document.getElementById('fStatus').value = 'all';
+  filter();
+}
+
+function clearPick() {
+  document.querySelectorAll('.chip[data-pick]').forEach(function(c){ c.classList.remove('active'); });
+  activePick = null;
+  phones.forEach(function(p, i) { p.cats = originalCats[i].slice(); });
+  document.getElementById('fBudget').value = 'all';
+  document.getElementById('fAvail').value = 'all';
+  document.getElementById('fStatus').value = 'all';
+  filter();
+}
+
+function filter() {
+  var budget = document.getElementById('fBudget').value;
+  var avail = document.getElementById('fAvail').value;
+  var status = document.getElementById('fStatus').value;
+  var results = document.getElementById('results');
+  results.innerHTML = '';
+
+  var nowCards = [], futureCards = [];
+
+  phones.forEach(function(p) {
+    var show = true;
+    if (budget !== 'all') {
+      if (budget === 'budget' && p.priceNum > 350) show = false;
+      if (budget === 'mid' && (p.priceNum < 350 || p.priceNum > 600)) show = false;
+      if (budget === 'high' && (p.priceNum < 600 || p.priceNum > 900)) show = false;
+      if (budget === 'premium' && p.priceNum < 900) show = false;
+    }
+    if (avail !== 'all') {
+      if (avail === 'now' && p.avail !== 'now') show = false;
+      if (avail === 'future' && p.avail !== 'future') show = false;
+    }
+    if (status !== 'all' && p.status !== status) show = false;
+    if (activePick && !p.cats.includes('__pick__')) show = false;
+
+    if (show) {
+      if (p.avail === 'future') futureCards.push(p);
+      else nowCards.push(p);
+    }
+  });
+
+  var total = nowCards.length + futureCards.length;
+  var countEl = document.getElementById('resultsCount');
+  if (total === 0) {
+    countEl.textContent = 'No devices match';
+  } else if (total === phones.length) {
+    countEl.textContent = 'Showing all ' + total + ' devices';
+  } else {
+    countEl.textContent = 'Showing ' + total + ' of ' + phones.length + ' devices';
+  }
+
+  if (total === 0) {
+    var empty = document.createElement('div');
+    empty.className = 'empty-state';
+    empty.innerHTML = '<p style="font-size:24px;margin-bottom:8px">🔍</p><p>No devices match these filters.<br>Try adjusting your selection.</p>';
+    results.appendChild(empty);
+    return;
+  }
+
+  if (nowCards.length > 0) {
+    if (futureCards.length > 0) {
+      var d = document.createElement('div');
+      d.className = 'section-divider';
+      d.textContent = 'Available now';
+      results.appendChild(d);
+    }
+    nowCards.forEach(function(p) { results.appendChild(makeCard(p)); });
+  }
+
+  if (futureCards.length > 0) {
+    var d2 = document.createElement('div');
+    d2.className = 'section-divider';
+    d2.textContent = 'Coming in 2027 — estimated specs';
+    results.appendChild(d2);
+    futureCards.forEach(function(p) { results.appendChild(makeCard(p)); });
+  }
+}
+
+function makeCard(p) {
+  var card = document.createElement('div');
+  card.className = 'phone-card' + (p.featured ? ' featured' : '');
+
+  var html = '';
+  if (p.rec) html += '<div class="rec-tag">' + p.rec + '</div>';
+
+  html += '<div class="card-header">';
+  html += '<div class="card-name">' + p.name + '</div>';
+  html += '<div class="card-price">' + p.price + '</div>';
+  html += '</div>';
+  html += '<div class="card-sub">' + p.sub + '</div>';
+
+  html += '<div class="badge-row">';
+  p.badges.forEach(function(b) {
+    html += '<span class="badge ' + b.c + '">' + b.t + '</span>';
+  });
+  html += '</div>';
+
+  html += '<div class="score-row"><span class="score-label">Security</span><div class="score-track"><div class="score-fill fill-blue" style="width:' + p.security + '%"></div></div><span class="score-num">' + p.security + '</span></div>';
+  html += '<div class="score-row"><span class="score-label">Support runway</span><div class="score-track"><div class="score-fill fill-green" style="width:' + p.support + '%"></div></div><span class="score-num">' + p.support + '</span></div>';
+  html += '<div class="score-row"><span class="score-label">Value</span><div class="score-track"><div class="score-fill fill-amber" style="width:' + p.value + '%"></div></div><span class="score-num">' + p.value + '</span></div>';
+
+  html += '<div class="stat-grid">';
+  html += '<div class="stat-cell"><div class="stat-label">Chip</div><div class="stat-val">' + p.stats.chip + '</div></div>';
+  html += '<div class="stat-cell"><div class="stat-label">RAM</div><div class="stat-val">' + p.stats.ram + '</div></div>';
+  html += '<div class="stat-cell"><div class="stat-label">Updates until</div><div class="stat-val">' + p.stats.updates + '</div></div>';
+  html += '<div class="stat-cell"><div class="stat-label">Screen size</div><div class="stat-val">' + p.stats.size + '</div></div>';
+  html += '</div>';
+
+  var ghLink = 'https://grapheneos.org/releases';
+  html += '<a class="ask-btn" href="' + ghLink + '" target="_blank">View on GrapheneOS.org ↗</a>';
+
+  card.innerHTML = html;
+  return card;
+}
+
+// THEME
+function toggleTheme() {
+  var html = document.documentElement;
+  var isDark = html.getAttribute('data-theme') === 'dark';
+  html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+  document.getElementById('themeBtn').textContent = isDark ? '🌙' : '☀️';
+  localStorage.setItem('theme', isDark ? 'light' : 'dark');
+}
+
+// Init theme
+(function() {
+  var saved = localStorage.getItem('theme');
+  var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  var theme = saved || (prefersDark ? 'dark' : 'light');
+  document.documentElement.setAttribute('data-theme', theme);
+  if (theme === 'dark') {
+    document.addEventListener('DOMContentLoaded', function() {
+      var btn = document.getElementById('themeBtn');
+      if (btn) btn.textContent = '☀️';
+    });
+  }
+})();
+
+// Init
+filter();
+</script>
+</body>
+</html>
