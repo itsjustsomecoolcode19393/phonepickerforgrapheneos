@@ -3,830 +3,329 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GrapheneOS Phone Picker</title>
+<title>GrapheneOS Guide — Phone Picker, Install Guide & Privacy Apps</title>
+<meta name="description" content="The complete GrapheneOS resource: phone picker with region pricing, installation guide, recommended privacy apps, and setup tips.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #ffffff;
-  --bg-secondary: #f7f7f5;
-  --bg-tertiary: #f0eeeb;
-  --text: #1a1a18;
-  --text-secondary: #5a5a56;
-  --text-tertiary: #9a9a94;
-  --border: rgba(0,0,0,0.08);
-  --border-strong: rgba(0,0,0,0.14);
-  --accent: #1a5fa8;
-  --accent-bg: #e8f0fb;
-  --accent-text: #0d3d72;
-  --green: #2d7d1e;
-  --green-bg: #e8f4e4;
-  --green-text: #1a4f10;
-  --amber: #9a5c00;
-  --amber-bg: #fdf0d8;
-  --amber-text: #6b3e00;
-  --red: #b02020;
-  --red-bg: #fce8e8;
-  --red-text: #7a1414;
-  --purple: #5b48cc;
-  --purple-bg: #eeedfb;
-  --purple-text: #362d8a;
-  --teal: #0d7a5a;
-  --teal-bg: #e0f4ec;
-  --teal-text: #084d38;
-  --radius: 10px;
-  --radius-sm: 6px;
-  --radius-pill: 100px;
-  --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
-  --shadow-md: 0 4px 12px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.04);
-  --font: 'DM Sans', sans-serif;
-  --mono: 'DM Mono', monospace;
-}
-
-[data-theme="dark"] {
-  --bg: #141412;
-  --bg-secondary: #1e1e1b;
-  --bg-tertiary: #252521;
-  --text: #f0efe8;
-  --text-secondary: #a8a8a0;
-  --text-tertiary: #68685e;
-  --border: rgba(255,255,255,0.08);
-  --border-strong: rgba(255,255,255,0.14);
-  --accent: #4a8fd4;
-  --accent-bg: #0d2540;
-  --accent-text: #8bbfe8;
-  --green: #4aac38;
-  --green-bg: #0d2a08;
-  --green-text: #7ad468;
-  --amber: #d4880a;
-  --amber-bg: #2a1e04;
-  --amber-text: #e8b84a;
-  --red: #d44a4a;
-  --red-bg: #2a0d0d;
-  --red-text: #e88888;
-  --purple: #8878e8;
-  --purple-bg: #1a1640;
-  --purple-text: #b0a8f0;
-  --teal: #28b888;
-  --teal-bg: #0a2820;
-  --teal-text: #68d8b0;
-}
-
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-body {
-  font-family: var(--font);
-  background: var(--bg-tertiary);
-  color: var(--text);
-  min-height: 100vh;
-  font-size: 15px;
-  line-height: 1.6;
-  -webkit-font-smoothing: antialiased;
-}
-
-/* HEADER */
-.site-header {
-  background: var(--bg);
-  border-bottom: 1px solid var(--border);
-  padding: 0 2rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 56px;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-}
-
-.logo {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  text-decoration: none;
-  color: var(--text);
-}
-
-.logo-mark {
-  width: 28px;
-  height: 28px;
-  background: var(--text);
-  border-radius: 7px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.logo-mark svg { fill: var(--bg); }
-
-.logo-text {
-  font-size: 14px;
-  font-weight: 500;
-  letter-spacing: -0.01em;
-}
-
-.logo-sub {
-  font-size: 13px;
-  color: var(--text-tertiary);
-  font-weight: 400;
-}
-
-.header-right { display: flex; align-items: center; gap: 12px; }
-
-.header-nav { display: flex; align-items: center; gap: 2px; }
-.nav-link {
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--text-secondary);
-  text-decoration: none;
-  padding: 5px 10px;
-  border-radius: var(--radius-sm);
-  transition: background 0.15s, color 0.15s;
-}
-.nav-link:hover { background: var(--bg-secondary); color: var(--text); }
-.nav-link.nav-ext { color: var(--accent); }
-.nav-link.nav-ext:hover { background: var(--accent-bg); }
-@media (max-width: 600px) { .header-nav { display: none; } }
-
-.theme-btn {
-  width: 34px;
-  height: 34px;
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--border);
-  background: var(--bg-secondary);
-  color: var(--text-secondary);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 15px;
-  transition: background 0.15s, border-color 0.15s;
-}
-.theme-btn:hover { background: var(--bg-tertiary); border-color: var(--border-strong); }
-
-/* MAIN LAYOUT */
-.main {
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 2rem 1.5rem 4rem;
-}
-
-/* PAGE TITLE */
-.page-hero {
-  margin-bottom: 2rem;
-}
-
-.page-title {
-  font-size: 26px;
-  font-weight: 500;
-  letter-spacing: -0.03em;
-  line-height: 1.2;
-  margin-bottom: 0.4rem;
-}
-
-.page-subtitle {
-  font-size: 14px;
-  color: var(--text-secondary);
-  line-height: 1.5;
-}
-
-.info-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  background: var(--amber-bg);
-  color: var(--amber-text);
-  font-size: 12px;
-  font-weight: 500;
-  padding: 4px 10px;
-  border-radius: var(--radius-pill);
-  margin-top: 0.75rem;
-}
-
-/* FILTER PANEL */
-.filter-panel {
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 1.25rem;
-  margin-bottom: 1.25rem;
-  box-shadow: var(--shadow);
-}
-
-.filter-row {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-  margin-bottom: 1rem;
-}
-
-.filter-group label {
-  display: block;
-  font-size: 11px;
-  font-weight: 500;
-  color: var(--text-tertiary);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  margin-bottom: 5px;
-}
-
-select {
-  width: 100%;
-  padding: 7px 10px;
-  font-size: 13px;
-  font-family: var(--font);
-  border: 1px solid var(--border-strong);
-  border-radius: var(--radius-sm);
-  background: var(--bg-secondary);
-  color: var(--text);
-  cursor: pointer;
-  appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' fill='none'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23999' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 10px center;
-  padding-right: 28px;
-  transition: border-color 0.15s;
-}
-select:focus { outline: none; border-color: var(--accent); }
-
-.picks-label {
-  font-size: 11px;
-  font-weight: 500;
-  color: var(--text-tertiary);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  margin-bottom: 8px;
-}
-
-.pick-chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-}
-
-.chip {
-  padding: 5px 12px;
-  border-radius: var(--radius-pill);
-  font-size: 12px;
-  font-weight: 500;
-  font-family: var(--font);
-  cursor: pointer;
-  border: 1px solid var(--border-strong);
-  background: var(--bg-secondary);
-  color: var(--text-secondary);
-  transition: all 0.15s;
-  white-space: nowrap;
-}
-.chip:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-bg); }
-.chip.active { background: var(--accent-bg); border-color: var(--accent); color: var(--accent-text); }
-.chip.clear-chip { color: var(--text-tertiary); }
-.chip.clear-chip:hover { color: var(--red); border-color: var(--red); background: var(--red-bg); }
-
-/* LEGEND */
-.legend {
-  display: flex;
-  gap: 16px;
-  margin-bottom: 1rem;
-  flex-wrap: wrap;
-}
-
-.legend-item {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 12px;
-  color: var(--text-secondary);
-}
-
-.legend-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  flex-shrink: 0;
-}
-
-/* SECTION DIVIDER */
-.section-divider {
-  font-size: 11px;
-  font-weight: 500;
-  color: var(--text-tertiary);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  padding: 0.5rem 0 0.6rem;
-  border-bottom: 1px solid var(--border);
-  margin: 0.5rem 0 0.75rem;
-  grid-column: 1 / -1;
-}
-
-/* RESULTS GRID */
-.results {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-}
-
-.empty-state {
-  grid-column: 1 / -1;
-  text-align: center;
-  padding: 3rem 1rem;
-  color: var(--text-tertiary);
-  font-size: 14px;
-  background: var(--bg);
-  border-radius: var(--radius);
-  border: 1px solid var(--border);
-}
-
-/* PHONE CARD */
-.phone-card {
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 1rem;
-  position: relative;
-  transition: border-color 0.15s, box-shadow 0.15s;
-  box-shadow: var(--shadow);
-  display: flex;
-  flex-direction: column;
-  animation: fadeIn 0.2s ease;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(4px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.phone-card:hover {
-  border-color: var(--border-strong);
-  box-shadow: var(--shadow-md);
-}
-
-.phone-card.featured {
-  border: 2px solid var(--accent);
-}
-
-.rec-tag {
-  position: absolute;
-  top: -1px;
-  right: 14px;
-  background: var(--accent);
-  color: white;
-  font-size: 10px;
-  font-weight: 500;
-  padding: 2px 9px;
-  border-radius: 0 0 var(--radius-sm) var(--radius-sm);
-  letter-spacing: 0.02em;
-}
-
-.card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 0.4rem;
-  gap: 8px;
-}
-
-.card-name {
-  font-size: 14px;
-  font-weight: 500;
-  letter-spacing: -0.01em;
-  line-height: 1.3;
-}
-
-.card-price {
-  font-size: 12px;
-  color: var(--text-secondary);
-  font-family: var(--mono);
-  white-space: nowrap;
-  flex-shrink: 0;
-}
-
-.card-sub {
-  font-size: 12px;
-  color: var(--text-secondary);
-  line-height: 1.5;
-  margin-bottom: 0.65rem;
-}
-
-.badge-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px;
-  margin-bottom: 0.65rem;
-}
-
-.badge {
-  font-size: 11px;
-  font-weight: 500;
-  padding: 2px 8px;
-  border-radius: var(--radius-sm);
-  white-space: nowrap;
-}
-
-.badge-blue { background: var(--accent-bg); color: var(--accent-text); }
-.badge-green { background: var(--green-bg); color: var(--green-text); }
-.badge-amber { background: var(--amber-bg); color: var(--amber-text); }
-.badge-red { background: var(--red-bg); color: var(--red-text); }
-.badge-purple { background: var(--purple-bg); color: var(--purple-text); }
-.badge-teal { background: var(--teal-bg); color: var(--teal-text); }
-.badge-gray { background: var(--bg-tertiary); color: var(--text-secondary); border: 1px solid var(--border); }
-
-/* SCORE BARS */
-.score-row {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 4px;
-}
-
-.score-label {
-  font-size: 11px;
-  color: var(--text-tertiary);
-  width: 88px;
-  flex-shrink: 0;
-}
-
-.score-track {
-  flex: 1;
-  height: 4px;
-  background: var(--bg-tertiary);
-  border-radius: 2px;
-  overflow: hidden;
-}
-
-.score-fill {
-  height: 100%;
-  border-radius: 2px;
-  transition: width 0.4s ease;
-}
-
-.fill-blue { background: var(--accent); }
-.fill-green { background: var(--green); }
-.fill-amber { background: var(--amber); }
-
-.score-num {
-  font-size: 11px;
-  color: var(--text-tertiary);
-  font-family: var(--mono);
-  width: 24px;
-  text-align: right;
-  flex-shrink: 0;
-}
-
-/* STAT GRID */
-.stat-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 6px;
-  margin-top: 0.75rem;
-  margin-bottom: 0.75rem;
-}
-
-.stat-cell {
-  background: var(--bg-secondary);
-  border-radius: var(--radius-sm);
-  padding: 6px 8px;
-}
-
-.stat-label {
-  font-size: 10px;
-  color: var(--text-tertiary);
-  margin-bottom: 1px;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-}
-
-.stat-val {
-  font-size: 12px;
-  font-weight: 500;
-  font-family: var(--mono);
-  color: var(--text);
-}
-
-/* ASK BUTTON */
-.ask-btn {
-  width: 100%;
-  padding: 7px 12px;
-  font-size: 12px;
-  font-family: var(--font);
-  font-weight: 500;
-  color: var(--text-secondary);
-  background: var(--bg-secondary);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  cursor: pointer;
-  transition: all 0.15s;
-  margin-top: auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 5px;
-  text-decoration: none;
-}
-.ask-btn:hover {
-  background: var(--accent-bg);
-  border-color: var(--accent);
-  color: var(--accent-text);
-}
-
-/* COUNT BAR */
-.results-meta {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 0.75rem;
-}
-
-.results-count {
-  font-size: 12px;
-  color: var(--text-tertiary);
-}
-
-/* FOOTER */
-.site-footer {
-  text-align: center;
-  padding: 2rem 1.5rem;
-  font-size: 12px;
-  color: var(--text-tertiary);
-  border-top: 1px solid var(--border);
-  background: var(--bg);
-  margin-top: 3rem;
-}
-
-.site-footer a { color: var(--accent); text-decoration: none; }
-.site-footer a:hover { text-decoration: underline; }
-
-/* INSTALL SECTION */
-.install-section {
-  background: var(--bg);
-  border-top: 1px solid var(--border);
-  padding: 4rem 1.5rem;
-  margin-top: 3rem;
-}
-
-.install-inner {
-  max-width: 900px;
-  margin: 0 auto;
-}
-
-.install-hero {
-  margin-bottom: 2.5rem;
-}
-
-.install-title {
-  font-size: 26px;
-  font-weight: 500;
-  letter-spacing: -0.03em;
-  margin-bottom: 0.5rem;
-}
-
-.install-sub {
-  font-size: 14px;
-  color: var(--text-secondary);
-  line-height: 1.6;
-  max-width: 560px;
-}
-
-.install-pills {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-top: 0.9rem;
-}
-
-.ipill {
-  font-size: 12px;
-  font-weight: 500;
-  padding: 4px 10px;
-  border-radius: var(--radius-pill);
-}
-
-.ipill-green { background: var(--green-bg); color: var(--green-text); }
-.ipill-blue  { background: var(--accent-bg); color: var(--accent-text); }
-.ipill-amber { background: var(--amber-bg); color: var(--amber-text); }
-
-.steps-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-  margin-bottom: 1.5rem;
-}
-
-.step-card {
-  background: var(--bg-secondary);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 1rem 1.1rem;
-  display: flex;
-  gap: 14px;
-  align-items: flex-start;
-  transition: border-color 0.15s;
-}
-
-.step-card:hover { border-color: var(--border-strong); }
-
-.step-card-important {
-  border-color: var(--accent);
-  background: var(--accent-bg);
-}
-
-.step-num {
-  width: 26px;
-  height: 26px;
-  border-radius: 50%;
-  background: var(--bg-tertiary);
-  color: var(--text-secondary);
-  font-size: 12px;
-  font-weight: 500;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  font-family: var(--mono);
-}
-
-.step-num-accent {
-  background: var(--accent);
-  color: white;
-}
-
-.step-title {
-  font-size: 13px;
-  font-weight: 500;
-  margin-bottom: 0.3rem;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  flex-wrap: wrap;
-}
-
-.critical-badge {
-  font-size: 10px;
-  font-weight: 500;
-  background: var(--accent);
-  color: white;
-  padding: 1px 7px;
-  border-radius: var(--radius-pill);
-  vertical-align: middle;
-}
-
-.step-desc {
-  font-size: 13px;
-  color: var(--text-secondary);
-  line-height: 1.6;
-}
-
-.step-desc a { color: var(--accent); text-decoration: none; }
-.step-desc a:hover { text-decoration: underline; }
-
-.install-tips {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-  margin-bottom: 2rem;
-}
-
-.tip-card {
-  border-radius: var(--radius);
-  padding: 1rem;
-  display: flex;
-  gap: 10px;
-  align-items: flex-start;
-  border: 1px solid transparent;
-}
-
-.tip-green { background: var(--green-bg); border-color: color-mix(in srgb, var(--green) 25%, transparent); }
-.tip-blue  { background: var(--accent-bg); border-color: color-mix(in srgb, var(--accent) 25%, transparent); }
-.tip-amber { background: var(--amber-bg); border-color: color-mix(in srgb, var(--amber) 25%, transparent); }
-
-.tip-icon { font-size: 18px; flex-shrink: 0; line-height: 1; margin-top: 1px; }
-
-.tip-title {
-  font-size: 13px;
-  font-weight: 500;
-  margin-bottom: 0.25rem;
-}
-
-.tip-text {
-  font-size: 12px;
-  color: var(--text-secondary);
-  line-height: 1.55;
-}
-
-.tip-text a { color: var(--accent); text-decoration: none; }
-.tip-text a:hover { text-decoration: underline; }
-
-.install-cta {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-  flex-wrap: wrap;
-}
-
-.cta-btn {
-  display: inline-flex;
-  align-items: center;
-  padding: 10px 20px;
-  background: var(--accent);
-  color: white;
-  font-size: 14px;
-  font-weight: 500;
-  font-family: var(--font);
-  text-decoration: none;
-  border-radius: var(--radius-sm);
-  transition: opacity 0.15s;
-}
-.cta-btn:hover { opacity: 0.88; }
-
-.cta-btn-ghost {
-  display: inline-flex;
-  align-items: center;
-  padding: 10px 20px;
-  background: transparent;
-  color: var(--text-secondary);
-  font-size: 14px;
-  font-weight: 500;
-  font-family: var(--font);
-  text-decoration: none;
-  border: 1px solid var(--border-strong);
-  border-radius: var(--radius-sm);
-  transition: all 0.15s;
-}
-.cta-btn-ghost:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-bg); }
-
-/* RESPONSIVE */
-@media (max-width: 640px) {
-  .filter-row { grid-template-columns: 1fr; }
-  .results { grid-template-columns: 1fr; }
-  .main { padding: 1.25rem 1rem 3rem; }
-  .page-title { font-size: 22px; }
-  .steps-grid { grid-template-columns: 1fr; }
-  .install-tips { grid-template-columns: 1fr; }
-  .install-section { padding: 2.5rem 1rem; }
-  .install-title { font-size: 22px; }
-}
-
-/* TRANSITIONS */
-body, .site-header, .filter-panel, .phone-card, select {
-  transition: background-color 0.2s, border-color 0.2s, color 0.2s;
-}
+  --bg:#ffffff;--bg2:#f7f7f5;--bg3:#f0eeeb;
+  --t:#1a1a18;--t2:#5a5a56;--t3:#9a9a94;
+  --bd:rgba(0,0,0,0.08);--bds:rgba(0,0,0,0.14);
+  --ac:#1a5fa8;--acb:#e8f0fb;--act:#0d3d72;
+  --gn:#2d7d1e;--gnb:#e8f4e4;--gnt:#1a4f10;
+  --am:#9a5c00;--amb:#fdf0d8;--amt:#6b3e00;
+  --rd:#b02020;--rdb:#fce8e8;--rdt:#7a1414;
+  --pu:#5b48cc;--pub:#eeedfb;--put:#362d8a;
+  --tl:#0d7a5a;--tlb:#e0f4ec;--tlt:#084d38;
+  --r:10px;--rs:6px;--rp:100px;
+  --sh:0 1px 3px rgba(0,0,0,0.06),0 1px 2px rgba(0,0,0,0.04);
+  --shm:0 4px 12px rgba(0,0,0,0.08),0 2px 4px rgba(0,0,0,0.04);
+  --f:'DM Sans',sans-serif;--m:'DM Mono',monospace;
+}
+[data-theme="dark"]{
+  --bg:#141412;--bg2:#1e1e1b;--bg3:#252521;
+  --t:#f0efe8;--t2:#a8a8a0;--t3:#68685e;
+  --bd:rgba(255,255,255,0.08);--bds:rgba(255,255,255,0.14);
+  --ac:#4a8fd4;--acb:#0d2540;--act:#8bbfe8;
+  --gn:#4aac38;--gnb:#0d2a08;--gnt:#7ad468;
+  --am:#d4880a;--amb:#2a1e04;--amt:#e8b84a;
+  --rd:#d44a4a;--rdb:#2a0d0d;--rdt:#e88888;
+  --pu:#8878e8;--pub:#1a1640;--put:#b0a8f0;
+  --tl:#28b888;--tlb:#0a2820;--tlt:#68d8b0;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--f);background:var(--bg3);color:var(--t);min-height:100vh;font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:var(--ac);text-decoration:none}
+a:hover{text-decoration:underline}
+code{font-family:var(--m);font-size:11px;background:var(--bg3);padding:2px 5px;border-radius:4px}
+
+/* ── HEADER ── */
+.hdr{background:var(--bg);border-bottom:1px solid var(--bd);padding:0 1.5rem;display:flex;align-items:center;justify-content:space-between;height:56px;position:sticky;top:0;z-index:200}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--t)}
+.lm{width:28px;height:28px;background:var(--t);border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.lm svg{fill:var(--bg)}
+.lt{font-size:14px;font-weight:500;letter-spacing:-0.01em;line-height:1.2}
+.ls{font-size:11px;color:var(--t3);font-weight:400}
+.hright{display:flex;align-items:center;gap:4px}
+.hnav{display:flex;align-items:center;gap:2px;margin-right:8px}
+.nl{font-size:13px;font-weight:500;color:var(--t2);text-decoration:none;padding:5px 9px;border-radius:var(--rs);transition:all .15s;white-space:nowrap}
+.nl:hover{background:var(--bg2);color:var(--t);text-decoration:none}
+.nl.ext{color:var(--ac)}
+.nl.ext:hover{background:var(--acb)}
+.tbtn{width:34px;height:34px;border-radius:var(--rs);border:1px solid var(--bd);background:var(--bg2);color:var(--t2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:15px;transition:all .15s}
+.tbtn:hover{background:var(--bg3);border-color:var(--bds)}
+@media(max-width:700px){.hnav{display:none}}
+
+/* ── HERO ── */
+.hero{background:var(--bg);border-bottom:1px solid var(--bd);padding:3rem 1.5rem 2.5rem}
+.hero-inner{max-width:900px;margin:0 auto}
+.hero h1{font-size:32px;font-weight:500;letter-spacing:-0.04em;line-height:1.15;margin-bottom:.6rem}
+.hero p{font-size:15px;color:var(--t2);max-width:560px;line-height:1.6;margin-bottom:1rem}
+.hero-pills{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:1.5rem}
+.hpill{font-size:12px;font-weight:500;padding:4px 10px;border-radius:var(--rp)}
+.hpill-g{background:var(--gnb);color:var(--gnt)}
+.hpill-b{background:var(--acb);color:var(--act)}
+.hpill-a{background:var(--amb);color:var(--amt)}
+.quick-nav{display:flex;flex-wrap:wrap;gap:8px}
+.qn-btn{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:var(--rs);border:1px solid var(--bds);background:var(--bg2);color:var(--t2);font-size:13px;font-weight:500;cursor:pointer;transition:all .15s;text-decoration:none}
+.qn-btn:hover{border-color:var(--ac);color:var(--ac);background:var(--acb);text-decoration:none}
+.qn-icon{font-size:16px}
+
+/* ── MAIN WRAP ── */
+.main{max-width:900px;margin:0 auto;padding:2rem 1.5rem 3rem}
+
+/* ── SECTION HEADERS ── */
+.sec-hdr{margin-bottom:1.25rem;padding-bottom:.75rem;border-bottom:1px solid var(--bd)}
+.sec-hdr h2{font-size:22px;font-weight:500;letter-spacing:-0.025em;margin-bottom:.25rem}
+.sec-hdr p{font-size:13px;color:var(--t2)}
+.sec-wrap{margin-bottom:3rem}
+
+/* ── CURRENCY BAR ── */
+.currency-bar{background:var(--bg);border:1px solid var(--bd);border-radius:var(--r);padding:.9rem 1.1rem;margin-bottom:1rem;display:flex;align-items:center;gap:12px;flex-wrap:wrap;box-shadow:var(--sh)}
+.cb-label{font-size:11px;font-weight:500;color:var(--t3);text-transform:uppercase;letter-spacing:.06em;white-space:nowrap}
+.cb-btns{display:flex;gap:5px;flex-wrap:wrap}
+.cb-btn{padding:4px 11px;border-radius:var(--rp);font-size:12px;font-weight:500;font-family:var(--f);border:1px solid var(--bds);background:var(--bg2);color:var(--t2);cursor:pointer;transition:all .15s}
+.cb-btn:hover{border-color:var(--ac);color:var(--act);background:var(--acb)}
+.cb-btn.on{background:var(--acb);border-color:var(--ac);color:var(--act)}
+.cb-note{font-size:11px;color:var(--t3);margin-left:auto}
+
+/* ── FILTER PANEL ── */
+.filter-panel{background:var(--bg);border:1px solid var(--bd);border-radius:var(--r);padding:1.1rem 1.25rem;margin-bottom:1.1rem;box-shadow:var(--sh)}
+.frow{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:.9rem}
+.fg label{display:block;font-size:11px;font-weight:500;color:var(--t3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px}
+select{width:100%;padding:7px 10px;font-size:13px;font-family:var(--f);border:1px solid var(--bds);border-radius:var(--rs);background:var(--bg2);color:var(--t);cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' fill='none'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23999' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;padding-right:28px;transition:border-color .15s}
+select:focus{outline:none;border-color:var(--ac)}
+.picks-lbl{font-size:11px;font-weight:500;color:var(--t3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:7px}
+.pick-chips{display:flex;flex-wrap:wrap;gap:5px}
+.chip{padding:5px 11px;border-radius:var(--rp);font-size:12px;font-weight:500;font-family:var(--f);cursor:pointer;border:1px solid var(--bds);background:var(--bg2);color:var(--t2);transition:all .15s;white-space:nowrap}
+.chip:hover{border-color:var(--ac);color:var(--ac);background:var(--acb)}
+.chip.on{background:var(--acb);border-color:var(--ac);color:var(--act)}
+.chip.clr:hover{color:var(--rd);border-color:var(--rd);background:var(--rdb)}
+
+/* ── LEGEND ── */
+.legend{display:flex;gap:14px;margin-bottom:.9rem;flex-wrap:wrap}
+.li{display:flex;align-items:center;gap:5px;font-size:12px;color:var(--t2)}
+.ld{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+
+/* ── RESULTS ── */
+.results-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:.7rem}
+.rm-count{font-size:12px;color:var(--t3)}
+.results{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.sec-div{grid-column:1/-1;font-size:11px;font-weight:500;color:var(--t3);text-transform:uppercase;letter-spacing:.06em;padding:.4rem 0 .5rem;border-bottom:1px solid var(--bd);margin-top:.25rem}
+.empty-state{grid-column:1/-1;text-align:center;padding:3rem 1rem;color:var(--t3);font-size:14px;background:var(--bg);border-radius:var(--r);border:1px solid var(--bd)}
+
+/* ── PHONE CARD ── */
+.pcard{background:var(--bg);border:1px solid var(--bd);border-radius:var(--r);padding:1rem;position:relative;transition:border-color .15s,box-shadow .15s;box-shadow:var(--sh);display:flex;flex-direction:column;animation:fi .2s ease}
+@keyframes fi{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+.pcard:hover{border-color:var(--bds);box-shadow:var(--shm)}
+.pcard.ft{border:2px solid var(--ac)}
+.rec-tag{position:absolute;top:-1px;right:14px;background:var(--ac);color:#fff;font-size:10px;font-weight:500;padding:2px 9px;border-radius:0 0 var(--rs) var(--rs);letter-spacing:.02em}
+.ch{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.35rem;gap:8px}
+.cn{font-size:14px;font-weight:500;letter-spacing:-0.01em}
+.cp{font-size:12px;color:var(--t2);font-family:var(--m);white-space:nowrap;flex-shrink:0}
+.csub{font-size:12px;color:var(--t2);line-height:1.5;margin-bottom:.6rem}
+.brow{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:.6rem}
+.badge{font-size:11px;font-weight:500;padding:2px 8px;border-radius:var(--rs);white-space:nowrap}
+.bb{background:var(--acb);color:var(--act)}
+.bg{background:var(--gnb);color:var(--gnt)}
+.ba{background:var(--amb);color:var(--amt)}
+.br{background:var(--rdb);color:var(--rdt)}
+.bp{background:var(--pub);color:var(--put)}
+.bt{background:var(--tlb);color:var(--tlt)}
+.bz{background:var(--bg3);color:var(--t2);border:1px solid var(--bd)}
+.srow{display:flex;align-items:center;gap:8px;margin-bottom:3px}
+.slbl{font-size:11px;color:var(--t3);width:88px;flex-shrink:0}
+.strk{flex:1;height:4px;background:var(--bg3);border-radius:2px;overflow:hidden}
+.sfill{height:100%;border-radius:2px;transition:width .4s}
+.fbl{background:var(--ac)}.fgn{background:var(--gn)}.fam{background:var(--am)}
+.snum{font-size:11px;color:var(--t3);font-family:var(--m);width:24px;text-align:right;flex-shrink:0}
+.sgrid{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-top:.7rem;margin-bottom:.7rem}
+.sc{background:var(--bg2);border-radius:var(--rs);padding:5px 8px}
+.scl{font-size:10px;color:var(--t3);margin-bottom:1px;text-transform:uppercase;letter-spacing:.04em}
+.scv{font-size:12px;font-weight:500;font-family:var(--m)}
+.ask-btn{width:100%;padding:7px 12px;font-size:12px;font-family:var(--f);font-weight:500;color:var(--t2);background:var(--bg2);border:1px solid var(--bd);border-radius:var(--rs);cursor:pointer;transition:all .15s;margin-top:auto;display:flex;align-items:center;justify-content:center;gap:5px;text-decoration:none}
+.ask-btn:hover{background:var(--acb);border-color:var(--ac);color:var(--act);text-decoration:none}
+
+/* ── APPS SECTION ── */
+.apps-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.app-card{background:var(--bg);border:1px solid var(--bd);border-radius:var(--r);padding:1rem;box-shadow:var(--sh);transition:border-color .15s}
+.app-card:hover{border-color:var(--bds)}
+.app-top{display:flex;align-items:flex-start;gap:10px;margin-bottom:.5rem}
+.app-icon{width:38px;height:38px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.app-info{flex:1}
+.app-name{font-size:13px;font-weight:500;margin-bottom:2px}
+.app-src{font-size:11px;color:var(--t3);margin-bottom:.3rem}
+.app-desc{font-size:12px;color:var(--t2);line-height:1.55}
+.app-tip{font-size:11px;color:var(--gnt);background:var(--gnb);border-radius:var(--rs);padding:5px 8px;margin-top:.5rem;line-height:1.45}
+.cat-label{grid-column:1/-1;font-size:11px;font-weight:500;color:var(--t3);text-transform:uppercase;letter-spacing:.06em;padding:.4rem 0 .5rem;border-bottom:1px solid var(--bd);margin-top:.5rem}
+
+/* ── INSTALL SECTION ── */
+.install-wrap{background:var(--bg);border-radius:var(--r);border:1px solid var(--bd);overflow:hidden;box-shadow:var(--sh)}
+.steps-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--bd)}
+.step-card{background:var(--bg);padding:1rem 1.1rem;display:flex;gap:12px;align-items:flex-start}
+.step-card.imp{background:var(--acb)}
+.stnum{width:24px;height:24px;border-radius:50%;background:var(--bg3);color:var(--t2);font-size:11px;font-weight:500;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:var(--m)}
+.stnum.hi{background:var(--ac);color:#fff}
+.sttitle{font-size:13px;font-weight:500;margin-bottom:.25rem;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.crit{font-size:10px;font-weight:500;background:var(--ac);color:#fff;padding:1px 7px;border-radius:var(--rp)}
+.stdesc{font-size:12px;color:var(--t2);line-height:1.6}
+.install-tips{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:1rem}
+.tip-card{border-radius:var(--r);padding:.9rem;display:flex;gap:10px;align-items:flex-start;border:1px solid transparent}
+.tpg{background:var(--gnb);border-color:rgba(45,125,30,.2)}
+.tpb{background:var(--acb);border-color:rgba(26,95,168,.2)}
+.tpa{background:var(--amb);border-color:rgba(154,92,0,.2)}
+.tpico{font-size:18px;flex-shrink:0;line-height:1;margin-top:1px}
+.tptitle{font-size:12px;font-weight:500;margin-bottom:.2rem}
+.tptext{font-size:12px;color:var(--t2);line-height:1.5}
+.install-cta{display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:1.1rem;background:var(--bg2);border-top:1px solid var(--bd)}
+.cta{display:inline-flex;align-items:center;padding:9px 18px;background:var(--ac);color:#fff;font-size:13px;font-weight:500;font-family:var(--f);text-decoration:none;border-radius:var(--rs);transition:opacity .15s}
+.cta:hover{opacity:.86;text-decoration:none}
+.ctag{display:inline-flex;align-items:center;padding:9px 18px;background:transparent;color:var(--t2);font-size:13px;font-weight:500;font-family:var(--f);text-decoration:none;border:1px solid var(--bds);border-radius:var(--rs);transition:all .15s}
+.ctag:hover{border-color:var(--ac);color:var(--ac);background:var(--acb);text-decoration:none}
+
+/* ── WHY SECTION ── */
+.why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.why-card{background:var(--bg);border:1px solid var(--bd);border-radius:var(--r);padding:1rem;box-shadow:var(--sh)}
+.why-icon{font-size:22px;margin-bottom:.5rem}
+.why-title{font-size:13px;font-weight:500;margin-bottom:.3rem}
+.why-text{font-size:12px;color:var(--t2);line-height:1.6}
+
+/* ── FAQ ── */
+.faq-item{border-bottom:1px solid var(--bd)}
+.faq-item:last-child{border-bottom:none}
+.faq-q{width:100%;background:none;border:none;padding:.85rem 0;cursor:pointer;text-align:left;font-size:13px;font-weight:500;color:var(--t);display:flex;justify-content:space-between;align-items:center;font-family:var(--f)}
+.faq-q:hover{color:var(--ac)}
+.faq-ico{font-size:16px;color:var(--t3);transition:transform .2s;flex-shrink:0}
+.faq-a{display:none;font-size:13px;color:var(--t2);line-height:1.65;padding-bottom:.85rem}
+.faq-a.on{display:block}
+.faq-a ul{padding-left:1.1rem;margin-top:.35rem}
+.faq-a li{margin-bottom:.3rem}
+.faq-wrap{background:var(--bg);border:1px solid var(--bd);border-radius:var(--r);padding:.25rem 1.1rem;box-shadow:var(--sh)}
+
+/* ── FOOTER ── */
+.footer{text-align:center;padding:2rem 1.5rem;font-size:12px;color:var(--t3);border-top:1px solid var(--bd);background:var(--bg);margin-top:1rem}
+.footer a{color:var(--ac)}
+
+/* ── RESPONSIVE ── */
+@media(max-width:640px){
+  .frow{grid-template-columns:1fr}
+  .results{grid-template-columns:1fr}
+  .apps-grid{grid-template-columns:1fr}
+  .steps-grid{grid-template-columns:1fr}
+  .why-grid{grid-template-columns:1fr 1fr}
+  .install-tips{grid-template-columns:1fr}
+  .hero h1{font-size:24px}
+  .main{padding:1.25rem 1rem 3rem}
+}
+
+body,select,.hdr,.pcard,.app-card,.why-card,.faq-wrap,.install-wrap{transition:background-color .2s,border-color .2s,color .2s}
 </style>
 </head>
 <body>
 
-<header class="site-header">
+<!-- HEADER -->
+<header class="hdr">
   <a class="logo" href="#">
-    <div class="logo-mark">
-      <svg width="14" height="14" viewBox="0 0 14 14"><path d="M7 0a7 7 0 100 14A7 7 0 007 0zm0 2a5 5 0 110 10A5 5 0 017 2zm0 2a3 3 0 100 6 3 3 0 000-6z"/></svg>
-    </div>
-    <div>
-      <div class="logo-text">GrapheneOS</div>
-      <div class="logo-sub">Phone Picker</div>
-    </div>
+    <div class="lm"><svg width="14" height="14" viewBox="0 0 14 14"><path d="M7 0a7 7 0 100 14A7 7 0 007 0zm0 2a5 5 0 110 10A5 5 0 017 2zm0 2a3 3 0 100 6 3 3 0 000-6z"/></svg></div>
+    <div><div class="lt">GrapheneOS Guide</div><div class="ls">Community resource</div></div>
   </a>
-  <div class="header-right">
-    <nav class="header-nav">
-      <a href="#picker" class="nav-link">Phone Picker</a>
-      <a href="#install" class="nav-link">Install Guide</a>
-      <a href="https://grapheneos.org" target="_blank" class="nav-link nav-ext">GrapheneOS.org ↗</a>
+  <div class="hright">
+    <nav class="hnav">
+      <a class="nl" href="#why">Why GrapheneOS</a>
+      <a class="nl" href="#picker">Phone Picker</a>
+      <a class="nl" href="#apps">Apps</a>
+      <a class="nl" href="#install">Install</a>
+      <a class="nl" href="#faq">FAQ</a>
+      <a class="nl ext" href="https://grapheneos.org" target="_blank">grapheneos.org ↗</a>
     </nav>
-    <button class="theme-btn" id="themeBtn" title="Toggle dark mode" onclick="toggleTheme()">🌙</button>
+    <button class="tbtn" id="themeBtn" onclick="toggleTheme()" title="Toggle dark mode">🌙</button>
   </div>
 </header>
 
-<main class="main">
-
-  <div id="picker"></div>
-  <div class="page-hero">
-    <h1 class="page-title">Find your GrapheneOS phone</h1>
-    <p class="page-subtitle">Every supported device — current Pixels, older bargains, and upcoming Motorola flagships — in one place. Filter by budget, use case, or support status.</p>
-    <div class="info-pill">
-      <span>⚡</span>
-      <span>Last updated May 2026 · Pixel 10 series fully stable · Motorola 2027 estimated</span>
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <h1>The unofficial GrapheneOS guide</h1>
+    <p>Everything you need to switch to the world's most private Android OS — which phone to buy, how to install it, which apps to use, and answers to common questions.</p>
+    <div class="hero-pills">
+      <span class="hpill hpill-g">✓ No Google account needed</span>
+      <span class="hpill hpill-b">✓ Works on all supported Pixels</span>
+      <span class="hpill hpill-a">⚡ Updated May 2026</span>
+    </div>
+    <div class="quick-nav">
+      <a class="qn-btn" href="#why"><span class="qn-icon">🛡️</span>Why GrapheneOS</a>
+      <a class="qn-btn" href="#picker"><span class="qn-icon">📱</span>Phone Picker</a>
+      <a class="qn-btn" href="#apps"><span class="qn-icon">📦</span>Recommended Apps</a>
+      <a class="qn-btn" href="#install"><span class="qn-icon">⚙️</span>Install Guide</a>
+      <a class="qn-btn" href="#faq"><span class="qn-icon">❓</span>FAQ</a>
     </div>
   </div>
+</div>
 
+<div class="main">
+
+<!-- ── WHY SECTION ── -->
+<div class="sec-wrap" id="why">
+  <div class="sec-hdr">
+    <h2>Why GrapheneOS?</h2>
+    <p>GrapheneOS is a privacy and security focused Android OS built on top of AOSP — the open-source Android base. Here's what makes it different.</p>
+  </div>
+  <div class="why-grid">
+    <div class="why-card"><div class="why-icon">🔒</div><div class="why-title">No Google by default</div><div class="why-text">Ships with zero Google services. No Play Store, no Firebase, no tracking. You choose what to install and what data leaves your device.</div></div>
+    <div class="why-card"><div class="why-icon">🛡️</div><div class="why-title">Hardened security</div><div class="why-text">Hardware memory tagging, hardened malloc, exploit mitigations, Verified Boot, and a sandboxed app model that goes far beyond stock Android.</div></div>
+    <div class="why-card"><div class="why-icon">📱</div><div class="why-title">Still a great Android</div><div class="why-text">Full Android compatibility. Works with most apps. You can optionally add Sandboxed Google Play in an isolated profile for apps that need it, like banking.</div></div>
+    <div class="why-card"><div class="why-icon">🔑</div><div class="why-title">Per-app permissions</div><div class="why-text">GrapheneOS adds network, sensors, storage scope, and contact scope permissions that stock Android doesn't have. You control exactly what each app can access.</div></div>
+    <div class="why-card"><div class="why-icon">👥</div><div class="why-title">Multiple profiles</div><div class="why-text">Completely isolated user profiles — one for daily use with no Google, one for banking with Sandboxed Play. Apps in different profiles can't see each other.</div></div>
+    <div class="why-card"><div class="why-icon">🔄</div><div class="why-title">Fast security updates</div><div class="why-text">GrapheneOS applies Android Security Bulletin patches within days of release — often faster than stock Pixel. Active development with a dedicated security team.</div></div>
+  </div>
+</div>
+
+<!-- ── PHONE PICKER ── -->
+<div class="sec-wrap" id="picker">
+  <div class="sec-hdr">
+    <h2>Phone Picker</h2>
+    <p>Every supported GrapheneOS device — current Pixels, older models, and upcoming Motorola flagships. Filter by budget and use case, and switch currency to your region.</p>
+  </div>
+
+  <!-- CURRENCY BAR -->
+  <div class="currency-bar">
+    <span class="cb-label">Currency</span>
+    <div class="cb-btns">
+      <button class="cb-btn on" onclick="setCurrency('eur',this)">🇪🇺 EUR €</button>
+      <button class="cb-btn" onclick="setCurrency('usd',this)">🇺🇸 USD $</button>
+      <button class="cb-btn" onclick="setCurrency('gbp',this)">🇬🇧 GBP £</button>
+      <button class="cb-btn" onclick="setCurrency('cad',this)">🇨🇦 CAD $</button>
+      <button class="cb-btn" onclick="setCurrency('aud',this)">🇦🇺 AUD $</button>
+      <button class="cb-btn" onclick="setCurrency('sek',this)">🇸🇪 SEK kr</button>
+      <button class="cb-btn" onclick="setCurrency('nok',this)">🇳🇴 NOK kr</button>
+      <button class="cb-btn" onclick="setCurrency('chf',this)">🇨🇭 CHF</button>
+      <button class="cb-btn" onclick="setCurrency('jpy',this)">🇯🇵 JPY ¥</button>
+    </div>
+    <span class="cb-note" id="fxNote">Approx. exchange rates · May 2026</span>
+  </div>
+
+  <!-- FILTER PANEL -->
   <div class="filter-panel">
-    <div class="filter-row">
-      <div class="filter-group">
-        <label for="fBudget">Budget</label>
+    <div class="frow">
+      <div class="fg"><label for="fBudget">Budget</label>
         <select id="fBudget" onchange="filter()">
           <option value="all">All prices</option>
-          <option value="budget">Under €350 (used)</option>
-          <option value="mid">€350 – €600</option>
-          <option value="high">€600 – €900</option>
-          <option value="premium">€900+</option>
+          <option value="budget">Budget tier (used)</option>
+          <option value="mid">Mid range</option>
+          <option value="high">High end</option>
+          <option value="premium">Premium</option>
         </select>
       </div>
-      <div class="filter-group">
-        <label for="fAvail">Availability</label>
+      <div class="fg"><label for="fAvail">Availability</label>
         <select id="fAvail" onchange="filter()">
           <option value="all">All</option>
           <option value="now">Available now</option>
           <option value="future">Coming 2027</option>
         </select>
       </div>
-      <div class="filter-group">
-        <label for="fStatus">Support status</label>
+      <div class="fg"><label for="fStatus">Support status</label>
         <select id="fStatus" onchange="filter()">
           <option value="all">All</option>
           <option value="stable">Fully stable</option>
@@ -836,9 +335,8 @@ body, .site-header, .filter-panel, .phone-card, select {
         </select>
       </div>
     </div>
-
-    <div class="picks-label">Top picks for</div>
-    <div class="pick-chips" id="pickChips">
+    <div class="picks-lbl">Top picks for</div>
+    <div class="pick-chips">
       <button class="chip" data-pick="everyday" onclick="usePick(this,'everyday')">Everyday use</button>
       <button class="chip" data-pick="budget" onclick="usePick(this,'budget')">Best value</button>
       <button class="chip" data-pick="maxprivacy" onclick="usePick(this,'maxprivacy')">Max privacy</button>
@@ -847,465 +345,355 @@ body, .site-header, .filter-panel, .phone-card, select {
       <button class="chip" data-pick="longevity" onclick="usePick(this,'longevity')">Longest support</button>
       <button class="chip" data-pick="foldable" onclick="usePick(this,'foldable')">Foldable / flip</button>
       <button class="chip" data-pick="refurb" onclick="usePick(this,'refurb')">Second hand</button>
-      <button class="chip clear-chip" onclick="clearPick()">✕ Clear</button>
+      <button class="chip clr" onclick="clearPick()">✕ Clear</button>
     </div>
   </div>
 
   <div class="legend">
-    <div class="legend-item"><div class="legend-dot" style="background:var(--accent)"></div>Security</div>
-    <div class="legend-item"><div class="legend-dot" style="background:var(--green)"></div>Support runway</div>
-    <div class="legend-item"><div class="legend-dot" style="background:var(--amber)"></div>Value for money</div>
+    <div class="li"><div class="ld" style="background:var(--ac)"></div>Security</div>
+    <div class="li"><div class="ld" style="background:var(--gn)"></div>Support runway</div>
+    <div class="li"><div class="ld" style="background:var(--am)"></div>Value for money</div>
   </div>
-
-  <div class="results-meta">
-    <div class="results-count" id="resultsCount">Showing all devices</div>
-  </div>
-
+  <div class="results-meta"><div class="rm-count" id="resultsCount">Showing all devices</div></div>
   <div class="results" id="results"></div>
+</div>
 
-</main>
+<!-- ── APPS SECTION ── -->
+<div class="sec-wrap" id="apps">
+  <div class="sec-hdr">
+    <h2>Recommended privacy apps</h2>
+    <p>A curated list of open-source and privacy-respecting apps for a complete degoogled setup. Install stores in order: GrapheneOS App Store → F-Droid → Obtainium → Aurora Store.</p>
+  </div>
+  <div class="apps-grid">
 
-</main>
+    <div class="cat-label">App stores</div>
 
-<!-- INSTALL GUIDE -->
-<section class="install-section" id="install">
-  <div class="install-inner">
+    <div class="app-card"><div class="app-top"><div class="app-icon" style="background:#E1F5EE">🏪</div><div class="app-info"><div class="app-name">GrapheneOS App Store <span class="badge bg">Built-in</span></div><div class="app-src">Pre-installed · open first</div></div></div><div class="app-desc">Your bootstrap. Has Vanadium browser, Auditor security app, and the Sandboxed Google Play bundle. Also use it to get F-Droid and Aurora Store.</div></div>
 
-    <div class="install-hero">
-      <h2 class="install-title">How to install GrapheneOS</h2>
-      <p class="install-sub">No command line needed. The official web installer handles everything in about 15 minutes. These steps work for all supported Pixel devices.</p>
-      <div class="install-pills">
-        <span class="ipill ipill-green">✓ No technical experience required</span>
-        <span class="ipill ipill-blue">✓ Takes ~15 minutes</span>
-        <span class="ipill ipill-amber">⚠ Wipes the phone — start fresh</span>
-      </div>
-    </div>
+    <div class="app-card"><div class="app-top"><div class="app-icon" style="background:#EEEDFE">📦</div><div class="app-info"><div class="app-name">F-Droid <span class="badge bp">FOSS only</span></div><div class="app-src">From GrapheneOS App Store or f-droid.org</div></div></div><div class="app-desc">Gold standard open-source app repository. No account, no tracking. VLC, Proton VPN, HeliBoard, Cromite, and many others come from here.</div></div>
 
-    <div class="steps-grid">
+    <div class="app-card"><div class="app-top"><div class="app-icon" style="background:#FAEEDA">⚙️</div><div class="app-info"><div class="app-name">Obtainium <span class="badge ba">GitHub APKs</span></div><div class="app-src">Install from F-Droid</div></div></div><div class="app-desc">Installs and auto-updates apps directly from GitHub releases. Paste a GitHub URL and it handles everything. Essential for NewPipe, Signal, Lawnchair, Spotube.</div></div>
 
-      <div class="step-card">
-        <div class="step-num">1</div>
-        <div class="step-body">
-          <div class="step-title">Buy the right phone</div>
-          <div class="step-desc">You need an <strong>unlocked</strong> Pixel — never carrier-locked (no KPN, T-Mobile, Vodafone branding). Buy direct from the Google Store, Bol.com, or an unlocked retailer. Carrier models often have a permanently fused bootloader.</div>
-        </div>
-      </div>
+    <div class="app-card"><div class="app-top"><div class="app-icon" style="background:#E6F1FB">🕵️</div><div class="app-info"><div class="app-name">Aurora Store <span class="badge bb">Play proxy</span></div><div class="app-src">Install from F-Droid only</div></div></div><div class="app-desc">Anonymous Play Store client using shared guest sessions. No Google account needed. Good fallback for apps not on F-Droid or GitHub.</div></div>
 
-      <div class="step-card">
-        <div class="step-num">2</div>
-        <div class="step-body">
-          <div class="step-title">Enable Developer Options</div>
-          <div class="step-desc">On first boot, skip Google sign-in and connect to Wi-Fi. Then go to <code>Settings → About phone</code> and tap <strong>Build number</strong> 7 times until you see "You are now a developer." Then go to <code>Settings → System → Developer options</code> and enable <strong>OEM unlocking</strong>.</div>
-        </div>
-      </div>
+    <div class="cat-label">Communication</div>
 
-      <div class="step-card">
-        <div class="step-num">3</div>
-        <div class="step-body">
-          <div class="step-title">Open the web installer on a desktop</div>
-          <div class="step-desc">On your computer, open <a href="https://grapheneos.org/install/web" target="_blank">grapheneos.org/install/web</a> in <strong>Chrome or Edge</strong> — not Firefox (WebUSB incompatibility). Connect the phone via USB. Use the original cable or a quality USB-C cable — cheap cables cause failures.</div>
-        </div>
-      </div>
+    <div class="app-card"><div class="app-top"><div class="app-icon" style="background:#E1F5EE">💬</div><div class="app-info"><div class="app-name">Signal <span class="badge bg">Recommended</span></div><div class="app-src">signal.org/android/apk via Obtainium</div></div></div><div class="app-desc">End-to-end encrypted messaging and calls. Uses its own push system — no Firebase, no Google dependency. Enable disappearing messages and Registration Lock.</div></div>
 
-      <div class="step-card">
-        <div class="step-num">4</div>
-        <div class="step-body">
-          <div class="step-title">Unlock the bootloader</div>
-          <div class="step-desc">The installer guides you through rebooting into fastboot mode. On the phone, use volume buttons to navigate and power to confirm. Accept the <strong>"Unlock bootloader?"</strong> prompt — this wipes all data. That's fine, the phone is new.</div>
-        </div>
-      </div>
+    <div class="app-card"><div class="app-top"><div class="app-icon" style="background:#E6F1FB">✉️</div><div class="app-info"><div class="app-name">ProtonMail</div><div class="app-src">proton.me/mail/download or Aurora</div></div></div><div class="app-desc">End-to-end encrypted email. Or use mail.proton.me in Vanadium — same features without an app at all.</div></div>
 
-      <div class="step-card">
-        <div class="step-num">5</div>
-        <div class="step-body">
-          <div class="step-title">Flash GrapheneOS</div>
-          <div class="step-desc">The installer downloads the correct GrapheneOS build for your exact device and flashes it automatically. Takes 3–5 minutes. <strong>Do not unplug the phone</strong> during this step. The installer shows clear progress and will tell you when it's done.</div>
-        </div>
-      </div>
+    <div class="cat-label">Browser & VPN</div>
 
-      <div class="step-card step-card-important">
-        <div class="step-num step-num-accent">6</div>
-        <div class="step-body">
-          <div class="step-title">Re-lock the bootloader <span class="critical-badge">Critical</span></div>
-          <div class="step-desc">After flashing, the installer prompts you to lock the bootloader again. <strong>Always do this.</strong> Re-locking restores Verified Boot — which cryptographically checks the OS on every startup and alerts you if anything has been tampered with. This is what makes GrapheneOS more secure than other custom ROMs.</div>
-        </div>
-      </div>
+    <div class="app-card"><div class="app-top"><div class="app-icon" style="background:#E1F5EE">🌐</div><div class="app-info"><div class="app-name">Vanadium <span class="badge bg">Built-in</span></div><div class="app-src">Pre-installed · use as main browser</div></div></div><div class="app-desc">Hardened Chromium deeply integrated with GrapheneOS. Safer than Firefox on Android (Firefox lacks internal sandboxing on Android). Enable DNS over HTTPS in settings.</div></div>
 
-      <div class="step-card">
-        <div class="step-num">7</div>
-        <div class="step-body">
-          <div class="step-title">First GrapheneOS setup</div>
-          <div class="step-desc">The phone boots into GrapheneOS. Go through setup — no Google account needed at any point. Set a <strong>strong PIN or passphrase</strong> (avoid patterns). When asked about location services, choose the GrapheneOS geocoding service — not Google's.</div>
-        </div>
-      </div>
+    <div class="app-card"><div class="app-top"><div class="app-icon" style="background:#EEEDFE">🌐</div><div class="app-info"><div class="app-name">Cromite <span class="badge bp">F-Droid</span></div><div class="app-src">F-Droid · secondary browser</div></div></div><div class="app-desc">Chromium with built-in ad blocking. Good as a secondary browser or for sites that behave differently in a separate browser profile.</div></div>
 
-      <div class="step-card">
-        <div class="step-num">8</div>
-        <div class="step-body">
-          <div class="step-title">Disable OEM unlocking again</div>
-          <div class="step-desc">Go to <code>Settings → System → Developer options</code> and turn off <strong>OEM unlocking</strong>. This prevents anyone with physical access to your phone from being able to unlock the bootloader and tamper with the OS — even if they know your PIN.</div>
-        </div>
-      </div>
+    <div class="app-card"><div class="app-top"><div class="app-icon" style="background:#E1F5EE">🛡️</div><div class="app-info"><div class="app-name">Proton VPN <span class="badge bg">Recommended</span></div><div class="app-src">F-Droid</div></div></div><div class="app-desc">No-logs, open-source, Swiss jurisdiction. After installing, set as Always-on VPN in Settings → Network with kill switch enabled. OS-level — no leaks even on boot.</div></div>
 
-    </div>
+    <div class="cat-label">Password & Security</div>
 
-    <div class="install-tips">
-      <div class="tip-card tip-green">
-        <div class="tip-icon">💡</div>
-        <div>
-          <div class="tip-title">Something went wrong?</div>
-          <div class="tip-text">The web installer has clear error messages and a recovery path for every failure mode. Nothing during installation can permanently damage the phone. The community forum at <a href="https://discuss.grapheneos.org" target="_blank">discuss.grapheneos.org</a> is also very responsive.</div>
-        </div>
-      </div>
-      <div class="tip-card tip-blue">
-        <div class="tip-icon">🏦</div>
-        <div>
-          <div class="tip-title">Need your banking app?</div>
-          <div class="tip-text">Create a separate user profile (Settings → System → Multiple users) and install Sandboxed Google Play there only. Your main profile stays completely Google-free. Most major banking apps work fine this way.</div>
-        </div>
-      </div>
-      <div class="tip-card tip-amber">
-        <div class="tip-icon">🔒</div>
-        <div>
-          <div class="tip-title">Key security settings after setup</div>
-          <div class="tip-text">Enable PIN scramble, set a VPN as always-on, configure auto-reboot (72h), and set USB-C to charge-only when locked. All found in Settings → Security.</div>
-        </div>
-      </div>
-    </div>
+    <div class="app-card"><div class="app-top"><div class="app-icon" style="background:#FAEEDA">🔑</div><div class="app-info"><div class="app-name">Proton Pass</div><div class="app-src">proton.me/pass or Aurora</div></div></div><div class="app-desc">End-to-end encrypted password manager. Enable autofill at Settings → Passwords & accounts. FOSS alternative: KeePassDX (F-Droid) + Syncthing for self-hosted sync.</div></div>
 
-    <div class="install-cta">
-      <a href="https://grapheneos.org/install/web" target="_blank" class="cta-btn">Open the web installer ↗</a>
-      <a href="https://grapheneos.org/faq" target="_blank" class="cta-btn-ghost">Read the FAQ ↗</a>
-    </div>
+    <div class="app-card"><div class="app-top"><div class="app-icon" style="background:#E1F5EE">🔐</div><div class="app-info"><div class="app-name">Aegis Authenticator <span class="badge bp">F-Droid</span></div><div class="app-src">F-Droid</div></div></div><div class="app-desc">Open-source 2FA app. Encrypted local storage for your TOTP codes. Backup export support. Replaces Google Authenticator with no Google dependency.</div></div>
+
+    <div class="cat-label">Media & Entertainment</div>
+
+    <div class="app-card"><div class="app-top"><div class="app-icon" style="background:#FCEBEB">📺</div><div class="app-info"><div class="app-name">NewPipe <span class="badge bp">F-Droid / Obtainium</span></div><div class="app-src">github.com/TeamNewPipe/NewPipe</div></div></div><div class="app-desc">YouTube frontend — no account, no tracking, background play, downloads, SponsorBlock. Never use the Play Store version.</div></div>
+
+    <div class="app-card"><div class="app-top"><div class="app-icon" style="background:#EEEDFE">🎬</div><div class="app-info"><div class="app-name">VLC <span class="badge bp">F-Droid</span></div><div class="app-src">F-Droid</div></div></div><div class="app-desc">Plays every video and audio format. Deny network permission in GrapheneOS (long-press app → App info → Permissions → Network) for local-only use.</div></div>
+
+    <div class="app-card"><div class="app-top"><div class="app-icon" style="background:#EEEDFE">🎵</div><div class="app-info"><div class="app-name">Musicolet <span class="badge ba">Obtainium</span></div><div class="app-src">krosbits.in/musicolet</div></div></div><div class="app-desc">Local music player with zero network permission — literally cannot call home. Gapless playback, equalizer, tag editing, multiple queues, Android Auto.</div></div>
+
+    <div class="app-card"><div class="app-top"><div class="app-icon" style="background:#E1F5EE">🎵</div><div class="app-info"><div class="app-name">Spotube <span class="badge ba">Obtainium</span></div><div class="app-src">github.com/KRTirtho/spotube</div></div></div><div class="app-desc">Spotify catalogue without a Spotify account. Streams from YouTube Music or Piped. No ads, no listener profiling, no account needed.</div></div>
+
+    <div class="cat-label">Keyboard</div>
+
+    <div class="app-card"><div class="app-top"><div class="app-icon" style="background:#E1F5EE">⌨️</div><div class="app-info"><div class="app-name">HeliBoard <span class="badge bg">Recommended</span></div><div class="app-src">F-Droid</div></div></div><div class="app-desc">Best privacy keyboard. No network permission, offline dictionaries, Material You theming, split keyboard, one-handed mode. Download language dictionaries from its GitHub page.</div><div class="app-tip">💡 Never use Gboard or SwiftKey — they send keystroke data to Google/Microsoft servers.</div></div>
+
+    <div class="app-card"><div class="app-top"><div class="app-icon" style="background:#EEEDFE">⌨️</div><div class="app-info"><div class="app-name">AnySoftKeyboard <span class="badge bp">F-Droid</span></div><div class="app-src">F-Droid</div></div></div><div class="app-desc">Most feature-rich FOSS keyboard. Swipe typing, voice input, many layouts, incognito mode. Best language pack library — ideal if you type in multiple languages.</div></div>
+
+    <div class="cat-label">Launcher</div>
+
+    <div class="app-card"><div class="app-top"><div class="app-icon" style="background:#E6F1FB">🪑</div><div class="app-info"><div class="app-name">Lawnchair 15 <span class="badge bg">Recommended</span></div><div class="app-src">github.com/LawnchairLauncher/lawnchair via Obtainium</div></div></div><div class="app-desc">Open-source Pixel Launcher equivalent. Material You, icon packs, custom grids, gesture controls. Get from GitHub via Obtainium only — Play Store and F-Droid versions are years out of date.</div></div>
+
+    <div class="app-card"><div class="app-top"><div class="app-icon" style="background:#F1EFE8">🔍</div><div class="app-info"><div class="app-name">KISS Launcher <span class="badge bz">Minimalist</span></div><div class="app-src">F-Droid</div></div></div><div class="app-desc">Under 1MB, search-first, almost no permissions. Replaces home screen with a search bar. Absolute minimum attack surface for those who want radical simplicity.</div></div>
 
   </div>
-</section>
+</div>
 
-<footer class="site-footer">
-  <p>Data accurate as of May 2026. Always verify support status at <a href="https://grapheneos.org/releases" target="_blank">grapheneos.org/releases</a> before buying.</p>
-  <p style="margin-top:6px">Built with the <a href="https://grapheneos.org" target="_blank">GrapheneOS</a> community in mind.</p>
+<!-- ── INSTALL SECTION ── -->
+<div class="sec-wrap" id="install">
+  <div class="sec-hdr">
+    <h2>How to install GrapheneOS</h2>
+    <p>No command line needed. The official web installer handles everything in about 15 minutes on a fast connection.</p>
+  </div>
+  <div class="install-wrap">
+    <div class="steps-grid">
+      <div class="step-card"><div class="stnum">1</div><div><div class="sttitle">Buy an unlocked Pixel</div><div class="stdesc">Never carrier-locked (KPN, T-Mobile, Vodafone). Buy direct from Google Store or an unlocked retailer. Carrier models often have a permanently fused bootloader.</div></div></div>
+      <div class="step-card"><div class="stnum">2</div><div><div class="sttitle">Enable Developer Options</div><div class="stdesc">Skip Google sign-in on first boot. Go to <code>Settings → About phone</code> → tap Build number 7 times. Then <code>Settings → System → Developer options</code> → enable <strong>OEM unlocking</strong>.</div></div></div>
+      <div class="step-card"><div class="stnum">3</div><div><div class="sttitle">Open the web installer on a desktop</div><div class="stdesc">Go to <a href="https://grapheneos.org/install/web" target="_blank">grapheneos.org/install/web</a> in <strong>Chrome or Edge</strong> — not Firefox (WebUSB incompatibility). Connect phone via USB with a quality cable.</div></div></div>
+      <div class="step-card"><div class="stnum">4</div><div><div class="sttitle">Unlock the bootloader</div><div class="stdesc">The installer guides you into fastboot mode. Accept the "Unlock bootloader?" prompt on the phone. This wipes all data — that's expected.</div></div></div>
+      <div class="step-card"><div class="stnum">5</div><div><div class="sttitle">Flash GrapheneOS</div><div class="stdesc">The installer downloads and flashes the correct build for your exact device automatically. Takes 3–5 minutes. Do not unplug the phone during this step.</div></div></div>
+      <div class="step-card imp"><div class="stnum hi">6</div><div><div class="sttitle">Re-lock the bootloader <span class="crit">Critical</span></div><div class="stdesc">Always do this. Re-locking restores Verified Boot — which cryptographically checks the OS on every startup. This is what makes GrapheneOS more secure than other custom ROMs.</div></div></div>
+      <div class="step-card"><div class="stnum">7</div><div><div class="sttitle">Complete setup</div><div class="stdesc">No Google account needed at any point. Set a strong PIN or passphrase. Choose GrapheneOS geocoding — not Google's — for location services.</div></div></div>
+      <div class="step-card"><div class="stnum">8</div><div><div class="sttitle">Disable OEM unlocking again</div><div class="stdesc"><code>Settings → System → Developer options</code> → turn off OEM unlocking. Prevents physical attackers from reflashing the device even if they know your PIN.</div></div></div>
+    </div>
+    <div style="padding:1rem 1.1rem;border-top:1px solid var(--bd)">
+      <div class="install-tips">
+        <div class="tip-card tpg"><div class="tpico">💡</div><div><div class="tptitle">Something went wrong?</div><div class="tptext">The installer has clear error messages and recovery paths for every failure. The community forum at <a href="https://discuss.grapheneos.org" target="_blank">discuss.grapheneos.org</a> is very responsive.</div></div></div>
+        <div class="tip-card tpb"><div class="tpico">🏦</div><div><div class="tptitle">Need banking apps?</div><div class="tptext">Create a separate user profile (Settings → System → Multiple users) and install Sandboxed Google Play there only. Most banking apps work fine this way.</div></div></div>
+        <div class="tip-card tpa"><div class="tpico">🔒</div><div><div class="tptitle">After setup</div><div class="tptext">Enable PIN scramble, set Proton VPN as always-on with kill switch, configure auto-reboot timer (72h), and set USB-C to charge-only when locked. All in Settings → Security.</div></div></div>
+      </div>
+    </div>
+    <div class="install-cta">
+      <a href="https://grapheneos.org/install/web" target="_blank" class="cta">Open web installer ↗</a>
+      <a href="https://grapheneos.org/faq" target="_blank" class="ctag">Read the FAQ ↗</a>
+      <a href="https://discuss.grapheneos.org" target="_blank" class="ctag">Community forum ↗</a>
+    </div>
+  </div>
+</div>
+
+<!-- ── FAQ SECTION ── -->
+<div class="sec-wrap" id="faq">
+  <div class="sec-hdr">
+    <h2>Common questions</h2>
+    <p>Answers to the questions that come up most when switching to GrapheneOS.</p>
+  </div>
+  <div class="faq-wrap">
+    <div class="faq-item"><button class="faq-q" onclick="faq(this)">Why do Pixels get GrapheneOS support and other phones don't? <span class="faq-ico">›</span></button><div class="faq-a">GrapheneOS requires very specific hardware: a bootloader that can be re-locked after flashing (to restore Verified Boot), a Titan M2 secure element, hardware memory tagging, and a commitment to monthly security patches delivered within days. Pixels are the only consumer devices that currently meet all these requirements simultaneously. A Motorola partnership was announced for 2027 devices.</div></div>
+    <div class="faq-item"><button class="faq-q" onclick="faq(this)">Can I still use my banking app? <span class="faq-ico">›</span></button><div class="faq-a">Yes, for most banks. Create a separate user profile called "Banking" in Settings → System → Multiple users. Install Sandboxed Google Play in that profile only. Your main profile stays completely Google-free. Check <a href="https://privsec.dev/banking-apps-compat-report" target="_blank">privsec.dev/banking-apps-compat-report</a> for your specific bank's compatibility before switching.</div></div>
+    <div class="faq-item"><button class="faq-q" onclick="faq(this)">Is GrapheneOS hard to maintain? <span class="faq-ico">›</span></button><div class="faq-a">No. Once set up, it behaves like a normal Android phone. Updates arrive through the GrapheneOS updater app and install automatically in the background like stock Android. The initial setup takes ~15 minutes; after that, day-to-day use is no more complex than a regular phone.</div></div>
+    <div class="faq-item"><button class="faq-q" onclick="faq(this)">Why is Firefox not recommended on Android? <span class="faq-ico">›</span></button><div class="faq-a">Unlike on desktop, Firefox on Android does not have internal process sandboxing. Each tab runs in the same process, meaning a compromised tab can access data from other tabs. Chromium-based browsers like Vanadium have strict site isolation with separate processes per site. GrapheneOS's own Vanadium also integrates directly with OS-level security hardening that Firefox bypasses.</div></div>
+    <div class="faq-item"><button class="faq-q" onclick="faq(this)">Will GrapheneOS support Pixel 11, 12, 13? <span class="faq-ico">›</span></button><div class="faq-a">Almost certainly yes, as long as Google keeps meeting GrapheneOS's requirements — 7+ years of updates, monthly security patches, hardware memory tagging, and a re-lockable bootloader. The project has 400,000+ active users, nearly all on Pixels, and has followed every Pixel generation so far. There is no indication this will change.</div></div>
+    <div class="faq-item"><button class="faq-q" onclick="faq(this)">What about the Motorola devices announced for 2027? <span class="faq-ico">›</span></button><div class="faq-a">A GrapheneOS–Motorola partnership was announced at MWC 2026. GrapheneOS listed the Motorola Signature, Razr Ultra, and Razr Fold as the likely first candidates — 2027 flagships with the right hardware. These are primarily aimed at enterprise customers and will be expensive (€800–€1500+ estimated). The Pixel lineup remains the best option for individual consumers through at least 2026–2027.</div></div>
+    <div class="faq-item"><button class="faq-q" onclick="faq(this)">Is carrier-locked the same as SIM-locked? <span class="faq-ico">›</span></button><div class="faq-a">No — they're different things. SIM-locked means you can only use one carrier's SIM (easily unlocked after contract). Carrier-locked in the GrapheneOS context means the OEM bootloader unlock is permanently disabled by the carrier, which prevents you from installing GrapheneOS at all. Always buy factory-unlocked, not carrier-branded.</div></div>
+    <div class="faq-item"><button class="faq-q" onclick="faq(this)">What happens when I switch profiles? <span class="faq-ico">›</span></button><div class="faq-a">Profiles are completely isolated — different apps, different data, different network configurations, different installed keyboards and launchers. Switching takes about 2 seconds via the user icon in the quick settings shade. When you leave a profile it becomes dormant — no background processes, no network activity from that profile until you switch back. You can also lock a profile so it re-encrypts until next authentication.</div></div>
+  </div>
+</div>
+
+</div><!-- /main -->
+
+<footer class="footer">
+  <p>Unofficial community resource. Always verify information at <a href="https://grapheneos.org" target="_blank">grapheneos.org</a> · <a href="https://discuss.grapheneos.org" target="_blank">discuss.grapheneos.org</a></p>
+  <p style="margin-top:5px">Data accurate as of May 2026 · Prices are approximate — check your local Google Store for exact pricing.</p>
 </footer>
 
 <script>
+// ── CURRENCY ──
+var cur = 'eur';
+var rates = { eur:1, usd:1.08, gbp:0.86, cad:1.47, aud:1.66, sek:11.2, nok:11.5, chf:0.97, jpy:167 };
+var syms = { eur:'€', usd:'$', gbp:'£', cad:'CA$', aud:'A$', sek:'kr', nok:'kr', chf:'CHF ', jpy:'¥' };
+var budgetLabels = {
+  eur:['Under €350 (used)','€350 – €600','€600 – €900','€900+'],
+  usd:['Under $380 (used)','$380 – $650','$650 – $970','$970+'],
+  gbp:['Under £300 (used)','£300 – £520','£520 – £775','£775+'],
+  cad:['Under CA$515 (used)','CA$515 – $880','CA$880 – $1320','CA$1320+'],
+  aud:['Under A$580 (used)','A$580 – $995','A$995 – $1490','A$1490+'],
+  sek:['Under kr3900 (used)','kr3900 – kr6700','kr6700 – kr10 000','kr10 000+'],
+  nok:['Under kr4000 (used)','kr4000 – kr6900','kr6900 – kr10 300','kr10 300+'],
+  chf:['Under CHF 340 (used)','CHF 340 – 580','CHF 580 – 870','CHF 870+'],
+  jpy:['Under ¥58 000 (used)','¥58 000 – ¥100 000','¥100 000 – ¥150 000','¥150 000+']
+};
+
+function fx(eur){ return Math.round(eur * rates[cur]); }
+function fmt(eur){
+  var s = syms[cur]; var v = fx(eur);
+  if(cur==='jpy') return s + v.toLocaleString();
+  if(cur==='sek'||cur==='nok') return v.toLocaleString() + ' ' + s;
+  return s + v.toLocaleString();
+}
+
+function setCurrency(c, btn){
+  cur = c;
+  document.querySelectorAll('.cb-btn').forEach(function(b){ b.classList.remove('on'); });
+  btn.classList.add('on');
+  var sel = document.getElementById('fBudget');
+  var lbls = budgetLabels[c];
+  sel.options[1].text = lbls[0];
+  sel.options[2].text = lbls[1];
+  sel.options[3].text = lbls[2];
+  sel.options[4].text = lbls[3];
+  filter();
+}
+
+// ── PHONES DATA ──
 var phones = [
-  {
-    id:'p10', name:'Pixel 10', price:'€799 new', priceNum:799,
-    sub:'Best all-round GrapheneOS phone right now. Tensor G5, ultrasonic fingerprint, 5× optical zoom, 12GB RAM.',
-    avail:'now', status:'stable',
-    security:95, support:90, value:65,
-    badges:[{t:'Fully stable',c:'badge-green'},{t:'Tensor G5',c:'badge-blue'},{t:'12GB RAM',c:'badge-blue'}],
-    stats:{chip:'Tensor G5 (3nm)',ram:'12GB',updates:'Until 2032',size:'6.3"'},
-    cats:['everyday','maxprivacy','camera','longevity'],
-    featured:true, rec:'Top pick 2026'
-  },
-  {
-    id:'p10a', name:'Pixel 10a', price:'€499 new', priceNum:499,
-    sub:'Best value new phone. Flat back, big battery, €300 cheaper than the 10. GrapheneOS experimental but maturing fast.',
-    avail:'now', status:'experimental',
-    security:88, support:88, value:90,
-    badges:[{t:'Experimental',c:'badge-amber'},{t:'Tensor G4',c:'badge-blue'},{t:'Large battery',c:'badge-teal'}],
-    stats:{chip:'Tensor G4',ram:'8GB',updates:'Until 2032',size:'6.1"'},
-    cats:['everyday','budget','compact'],
-    featured:false, rec:'Best value new'
-  },
-  {
-    id:'p9', name:'Pixel 9', price:'€550–650 new / €350+ used', priceNum:600,
-    sub:'Proven stable support, excellent display and camera. A safe choice if you want current-gen without the Pixel 10 price.',
-    avail:'now', status:'stable',
-    security:90, support:80, value:75,
-    badges:[{t:'Fully stable',c:'badge-green'},{t:'Tensor G4',c:'badge-blue'}],
-    stats:{chip:'Tensor G4',ram:'12GB',updates:'Until 2031',size:'6.3"'},
-    cats:['everyday','longevity'],
-    featured:false
-  },
-  {
-    id:'p9pro', name:'Pixel 9 Pro', price:'€750–900 new / €500+ used', priceNum:825,
-    sub:'Top camera system, 16GB RAM. Worth the premium if photography matters to you.',
-    avail:'now', status:'stable',
-    security:92, support:80, value:65,
-    badges:[{t:'Fully stable',c:'badge-green'},{t:'Pro camera',c:'badge-teal'},{t:'16GB RAM',c:'badge-blue'}],
-    stats:{chip:'Tensor G4',ram:'16GB',updates:'Until 2031',size:'6.3"'},
-    cats:['camera','maxprivacy'],
-    featured:false
-  },
-  {
-    id:'p9profold', name:'Pixel 9 Pro Fold', price:'€1600+ new / €1000+ used', priceNum:1600,
-    sub:'Large tablet-style foldable. Excellent for running multiple profiles side by side. Premium price.',
-    avail:'now', status:'stable',
-    security:92, support:80, value:38,
-    badges:[{t:'Fully stable',c:'badge-green'},{t:'Foldable',c:'badge-purple'},{t:'8.0" inner',c:'badge-gray'}],
-    stats:{chip:'Tensor G4',ram:'16GB',updates:'Until 2031',size:'6.3" / 8.0"'},
-    cats:['foldable'],
-    featured:false
-  },
-  {
-    id:'p10pro', name:'Pixel 10 Pro', price:'€1099 new', priceNum:1099,
-    sub:'Best camera available on any GrapheneOS device. Tensor G5, three cameras, telephoto macro.',
-    avail:'now', status:'stable',
-    security:95, support:90, value:55,
-    badges:[{t:'Fully stable',c:'badge-green'},{t:'Tensor G5',c:'badge-blue'},{t:'Best camera',c:'badge-teal'}],
-    stats:{chip:'Tensor G5 (3nm)',ram:'16GB',updates:'Until 2032',size:'6.3"'},
-    cats:['camera','maxprivacy'],
-    featured:false
-  },
-  {
-    id:'p10profold', name:'Pixel 10 Pro Fold', price:'€1799 new', priceNum:1799,
-    sub:'Latest foldable. Tensor G5, huge inner display, longest update guarantee. Ideal multi-profile setup.',
-    avail:'now', status:'stable',
-    security:95, support:90, value:36,
-    badges:[{t:'Fully stable',c:'badge-green'},{t:'Foldable',c:'badge-purple'},{t:'Tensor G5',c:'badge-blue'}],
-    stats:{chip:'Tensor G5 (3nm)',ram:'16GB',updates:'Until 2032',size:'6.3" / 8.0"'},
-    cats:['foldable','maxprivacy','longevity'],
-    featured:false
-  },
-  {
-    id:'p8', name:'Pixel 8', price:'€250–350 used', priceNum:300,
-    sub:'The budget sweet spot. Still excellent security hardware, solid camera, proven long-term GrapheneOS support.',
-    avail:'now', status:'stable',
-    security:82, support:58, value:92,
-    badges:[{t:'Fully stable',c:'badge-green'},{t:'Great value',c:'badge-amber'}],
-    stats:{chip:'Tensor G3',ram:'8GB',updates:'Until 2028',size:'6.2"'},
-    cats:['budget','refurb','compact'],
-    featured:false, rec:'Budget pick'
-  },
-  {
-    id:'p8a', name:'Pixel 8a', price:'€250–350 used / €400 new', priceNum:320,
-    sub:'Best compact budget option. Nearly identical specs to Pixel 8, slightly newer. Great second hand.',
-    avail:'now', status:'stable',
-    security:82, support:62, value:90,
-    badges:[{t:'Fully stable',c:'badge-green'},{t:'Compact',c:'badge-teal'},{t:'Great value',c:'badge-amber'}],
-    stats:{chip:'Tensor G3',ram:'8GB',updates:'Until 2029',size:'6.1"'},
-    cats:['budget','compact','refurb'],
-    featured:false
-  },
-  {
-    id:'p7', name:'Pixel 7', price:'€100–180 used', priceNum:140,
-    sub:'Very tight budget option. Support ends October 2027 — only about 17 months left. Short runway.',
-    avail:'now', status:'stable',
-    security:72, support:28, value:65,
-    badges:[{t:'Ends Oct 2027',c:'badge-amber'},{t:'Short runway',c:'badge-gray'}],
-    stats:{chip:'Tensor G2',ram:'8GB',updates:'Oct 2027',size:'6.3"'},
-    cats:['refurb'],
-    featured:false
-  },
-  {
-    id:'p7a', name:'Pixel 7a', price:'€130–220 used', priceNum:175,
-    sub:'Compact and affordable. Support ends October 2027. Only buy if very cheap and you accept upgrading soon.',
-    avail:'now', status:'stable',
-    security:72, support:28, value:68,
-    badges:[{t:'Ends Oct 2027',c:'badge-amber'},{t:'Compact',c:'badge-teal'}],
-    stats:{chip:'Tensor G2',ram:'8GB',updates:'Oct 2027',size:'6.1"'},
-    cats:['refurb','compact'],
-    featured:false
-  },
-  {
-    id:'p6', name:'Pixel 6 / 6a', price:'€70–130 used', priceNum:100,
-    sub:'End of life October 2026 — only months away. Do not buy unless you fully accept no more security updates.',
-    avail:'now', status:'eol',
-    security:52, support:4, value:20,
-    badges:[{t:'EOL Oct 2026',c:'badge-red'},{t:'Avoid',c:'badge-red'}],
-    stats:{chip:'Tensor G1',ram:'8GB',updates:'Oct 2026 ⚠',size:'6.4"'},
-    cats:[],
-    featured:false
-  },
-  {
-    id:'moto-sig', name:'Motorola Signature 2027', price:'~€800–1000 est.', priceNum:900,
-    sub:'First expected non-Pixel GrapheneOS device. Snapdragon flagship, likely to ship with GrapheneOS pre-installed.',
-    avail:'future', status:'future',
-    security:90, support:85, value:60,
-    badges:[{t:'Coming 2027',c:'badge-purple'},{t:'Snapdragon',c:'badge-blue'},{t:'Estimated',c:'badge-gray'}],
-    stats:{chip:'Snapdragon (2027)',ram:'TBA',updates:'~7yr est.',size:'TBA'},
-    cats:['everyday','maxprivacy'],
-    featured:false, rec:'Watch this'
-  },
-  {
-    id:'moto-razrultra', name:'Motorola Razr Ultra 2027', price:'~€1200+ est.', priceNum:1200,
-    sub:'Flip foldable on GrapheneOS\'s own candidate list. Snapdragon, consumer-friendly form — the exciting wild card.',
-    avail:'future', status:'future',
-    security:88, support:82, value:42,
-    badges:[{t:'Coming 2027',c:'badge-purple'},{t:'Flip foldable',c:'badge-teal'},{t:'Estimated',c:'badge-gray'}],
-    stats:{chip:'Snapdragon (2027)',ram:'TBA',updates:'~7yr est.',size:'Flip form'},
-    cats:['foldable'],
-    featured:false, rec:'Flip option'
-  },
-  {
-    id:'moto-razrfold', name:'Motorola Razr Fold 2027', price:'~€1500+ est.', priceNum:1500,
-    sub:'Large tablet foldable on the candidate list. Enterprise-leaning, but may be consumer-available.',
-    avail:'future', status:'future',
-    security:88, support:82, value:35,
-    badges:[{t:'Coming 2027',c:'badge-purple'},{t:'Tablet fold',c:'badge-purple'},{t:'Estimated',c:'badge-gray'}],
-    stats:{chip:'Snapdragon (2027)',ram:'TBA',updates:'~7yr est.',size:'Tablet fold'},
-    cats:['foldable'],
-    featured:false
-  }
+  {id:'p10',name:'Pixel 10',basePrice:799,priceLow:799,priceHigh:799,usedLow:null,usedHigh:null,sub:'Best all-round GrapheneOS phone right now. Tensor G5, ultrasonic fingerprint, 5× optical zoom, 12GB RAM.',avail:'now',status:'stable',security:95,support:90,value:65,badges:[{t:'Fully stable',c:'bg'},{t:'Tensor G5',c:'bb'},{t:'12GB RAM',c:'bb'}],stats:{chip:'Tensor G5 (3nm)',ram:'12GB',updates:'Until 2032',size:'6.3"'},cats:['everyday','maxprivacy','camera','longevity'],featured:true,rec:'Top pick 2026'},
+  {id:'p10a',name:'Pixel 10a',basePrice:499,priceLow:499,priceHigh:499,usedLow:null,usedHigh:null,sub:'Best value new phone. Flat back, big battery, €300 cheaper than the 10. Experimental support maturing fast.',avail:'now',status:'experimental',security:88,support:88,value:90,badges:[{t:'Experimental',c:'ba'},{t:'Tensor G4',c:'bb'},{t:'Big battery',c:'bt'}],stats:{chip:'Tensor G4',ram:'8GB',updates:'Until 2032',size:'6.1"'},cats:['everyday','budget','compact'],featured:false,rec:'Best value new'},
+  {id:'p9',name:'Pixel 9',basePrice:600,priceLow:550,priceHigh:650,usedLow:350,usedHigh:450,sub:'Proven stable support. Excellent display and camera. Safe current-gen choice.',avail:'now',status:'stable',security:90,support:80,value:75,badges:[{t:'Fully stable',c:'bg'},{t:'Tensor G4',c:'bb'}],stats:{chip:'Tensor G4',ram:'12GB',updates:'Until 2031',size:'6.3"'},cats:['everyday','longevity'],featured:false},
+  {id:'p9pro',name:'Pixel 9 Pro',basePrice:825,priceLow:750,priceHigh:900,usedLow:500,usedHigh:650,sub:'Top camera system, 16GB RAM. Worth the premium if photography matters.',avail:'now',status:'stable',security:92,support:80,value:65,badges:[{t:'Fully stable',c:'bg'},{t:'Pro camera',c:'bt'},{t:'16GB RAM',c:'bb'}],stats:{chip:'Tensor G4',ram:'16GB',updates:'Until 2031',size:'6.3"'},cats:['camera','maxprivacy'],featured:false},
+  {id:'p9profold',name:'Pixel 9 Pro Fold',basePrice:1600,priceLow:1600,priceHigh:1800,usedLow:1000,usedHigh:1200,sub:'Large tablet-style foldable. Excellent for running multiple isolated profiles side by side.',avail:'now',status:'stable',security:92,support:80,value:38,badges:[{t:'Fully stable',c:'bg'},{t:'Foldable',c:'bp'},{t:'8.0" inner',c:'bz'}],stats:{chip:'Tensor G4',ram:'16GB',updates:'Until 2031',size:'6.3" / 8.0"'},cats:['foldable'],featured:false},
+  {id:'p10pro',name:'Pixel 10 Pro',basePrice:1099,priceLow:1099,priceHigh:1099,usedLow:null,usedHigh:null,sub:'Best camera available on any GrapheneOS device. Tensor G5, three cameras, telephoto macro.',avail:'now',status:'stable',security:95,support:90,value:55,badges:[{t:'Fully stable',c:'bg'},{t:'Tensor G5',c:'bb'},{t:'Best camera',c:'bt'}],stats:{chip:'Tensor G5 (3nm)',ram:'16GB',updates:'Until 2032',size:'6.3"'},cats:['camera','maxprivacy'],featured:false},
+  {id:'p10profold',name:'Pixel 10 Pro Fold',basePrice:1799,priceLow:1799,priceHigh:1799,usedLow:null,usedHigh:null,sub:'Latest foldable. Tensor G5, huge inner display, longest update guarantee. Ideal multi-profile setup.',avail:'now',status:'stable',security:95,support:90,value:36,badges:[{t:'Fully stable',c:'bg'},{t:'Foldable',c:'bp'},{t:'Tensor G5',c:'bb'}],stats:{chip:'Tensor G5 (3nm)',ram:'16GB',updates:'Until 2032',size:'6.3" / 8.0"'},cats:['foldable','maxprivacy','longevity'],featured:false},
+  {id:'p8',name:'Pixel 8',basePrice:300,priceLow:null,priceHigh:null,usedLow:250,usedHigh:350,sub:'The budget sweet spot. Still excellent security hardware, solid camera, proven long-term support.',avail:'now',status:'stable',security:82,support:58,value:92,badges:[{t:'Fully stable',c:'bg'},{t:'Great value',c:'ba'}],stats:{chip:'Tensor G3',ram:'8GB',updates:'Until 2028',size:'6.2"'},cats:['budget','refurb','compact'],featured:false,rec:'Budget pick'},
+  {id:'p8a',name:'Pixel 8a',basePrice:320,priceLow:400,priceHigh:400,usedLow:250,usedHigh:350,sub:'Best compact budget option. Nearly identical specs to Pixel 8, slightly newer. Great second hand.',avail:'now',status:'stable',security:82,support:62,value:90,badges:[{t:'Fully stable',c:'bg'},{t:'Compact',c:'bt'},{t:'Great value',c:'ba'}],stats:{chip:'Tensor G3',ram:'8GB',updates:'Until 2029',size:'6.1"'},cats:['budget','compact','refurb'],featured:false},
+  {id:'p7',name:'Pixel 7',basePrice:140,priceLow:null,priceHigh:null,usedLow:100,usedHigh:180,sub:'Very tight budget option. Support ends October 2027 — only about 17 months left.',avail:'now',status:'stable',security:72,support:28,value:65,badges:[{t:'Ends Oct 2027',c:'ba'},{t:'Short runway',c:'bz'}],stats:{chip:'Tensor G2',ram:'8GB',updates:'Oct 2027',size:'6.3"'},cats:['refurb'],featured:false},
+  {id:'p7a',name:'Pixel 7a',basePrice:175,priceLow:null,priceHigh:null,usedLow:130,usedHigh:220,sub:'Compact and affordable. Support ends October 2027. Only buy if very cheap.',avail:'now',status:'stable',security:72,support:28,value:68,badges:[{t:'Ends Oct 2027',c:'ba'},{t:'Compact',c:'bt'}],stats:{chip:'Tensor G2',ram:'8GB',updates:'Oct 2027',size:'6.1"'},cats:['refurb','compact'],featured:false},
+  {id:'p6',name:'Pixel 6 / 6a',basePrice:100,priceLow:null,priceHigh:null,usedLow:70,usedHigh:130,sub:'End of life October 2026. Do not buy — security updates stop in months.',avail:'now',status:'eol',security:52,support:4,value:20,badges:[{t:'EOL Oct 2026',c:'br'},{t:'Avoid',c:'br'}],stats:{chip:'Tensor G1',ram:'8GB',updates:'Oct 2026 ⚠',size:'6.4"'},cats:[],featured:false},
+  {id:'moto-sig',name:'Motorola Signature 2027',basePrice:900,priceLow:800,priceHigh:1000,usedLow:null,usedHigh:null,sub:'First expected non-Pixel GrapheneOS device. Snapdragon flagship, likely to ship pre-installed.',avail:'future',status:'future',security:90,support:85,value:60,badges:[{t:'Coming 2027',c:'bp'},{t:'Snapdragon',c:'bb'},{t:'Estimated',c:'bz'}],stats:{chip:'Snapdragon (2027)',ram:'TBA',updates:'~7yr est.',size:'TBA'},cats:['everyday','maxprivacy'],featured:false,rec:'Watch this'},
+  {id:'moto-razrultra',name:'Motorola Razr Ultra 2027',basePrice:1200,priceLow:1200,priceHigh:1400,usedLow:null,usedHigh:null,sub:"Flip foldable on GrapheneOS's own candidate list. Snapdragon, consumer-friendly — the exciting wild card.",avail:'future',status:'future',security:88,support:82,value:42,badges:[{t:'Coming 2027',c:'bp'},{t:'Flip foldable',c:'bt'},{t:'Estimated',c:'bz'}],stats:{chip:'Snapdragon (2027)',ram:'TBA',updates:'~7yr est.',size:'Flip form'},cats:['foldable'],featured:false,rec:'Flip option'},
+  {id:'moto-razrfold',name:'Motorola Razr Fold 2027',basePrice:1500,priceLow:1500,priceHigh:1700,usedLow:null,usedHigh:null,sub:'Large tablet foldable on the candidate list. Enterprise-leaning, but may be consumer-available.',avail:'future',status:'future',security:88,support:82,value:35,badges:[{t:'Coming 2027',c:'bp'},{t:'Tablet fold',c:'bp'},{t:'Estimated',c:'bz'}],stats:{chip:'Snapdragon (2027)',ram:'TBA',updates:'~7yr est.',size:'Tablet fold'},cats:['foldable'],featured:false}
 ];
 
 var activePick = null;
 var originalCats = phones.map(function(p){ return p.cats.slice(); });
-
 var pickMap = {
-  everyday:   ['p10','p10a','p9','moto-sig'],
-  budget:     ['p8','p8a','p10a'],
-  maxprivacy: ['p10','p10pro','p9pro','p10profold','moto-sig'],
-  camera:     ['p10pro','p9pro','p10'],
-  compact:    ['p10a','p8a','p7a','p8'],
-  longevity:  ['p10','p10pro','p10profold','p9'],
-  foldable:   ['p9profold','p10profold','moto-razrultra','moto-razrfold'],
-  refurb:     ['p8','p8a','p7','p7a']
+  everyday:['p10','p10a','p9','moto-sig'],
+  budget:['p8','p8a','p10a'],
+  maxprivacy:['p10','p10pro','p9pro','p10profold','moto-sig'],
+  camera:['p10pro','p9pro','p10'],
+  compact:['p10a','p8a','p7a','p8'],
+  longevity:['p10','p10pro','p10profold','p9'],
+  foldable:['p9profold','p10profold','moto-razrultra','moto-razrfold'],
+  refurb:['p8','p8a','p7','p7a']
 };
 
-function usePick(btn, key) {
-  document.querySelectorAll('.chip[data-pick]').forEach(function(c){ c.classList.remove('active'); });
-  btn.classList.add('active');
-  activePick = key;
-  var ids = pickMap[key];
-  phones.forEach(function(p, i) {
-    p.cats = ids.includes(p.id) ? ['__pick__'] : [];
-  });
-  document.getElementById('fBudget').value = 'all';
-  document.getElementById('fAvail').value = 'all';
-  document.getElementById('fStatus').value = 'all';
+function getPrice(p){
+  if(p.avail==='future'){
+    return '~' + fmt(p.priceLow) + '–' + fmt(p.priceHigh) + ' est.';
+  }
+  var parts = [];
+  if(p.priceLow && p.priceHigh){
+    if(p.priceLow===p.priceHigh) parts.push(fmt(p.priceLow)+' new');
+    else parts.push(fmt(p.priceLow)+'–'+fmt(p.priceHigh)+' new');
+  }
+  if(p.usedLow && p.usedHigh) parts.push(fmt(p.usedLow)+'–'+fmt(p.usedHigh)+' used');
+  if(parts.length===0) parts.push(fmt(p.basePrice));
+  return parts.join(' / ');
+}
+
+function getBudgetNum(p){
+  return p.usedLow ? p.usedLow : (p.priceLow ? p.priceLow : p.basePrice);
+}
+
+function usePick(btn,key){
+  document.querySelectorAll('.chip[data-pick]').forEach(function(c){c.classList.remove('on');});
+  btn.classList.add('on');
+  activePick=key;
+  var ids=pickMap[key];
+  phones.forEach(function(p,i){ p.cats=ids.includes(p.id)?['__pick__']:[];});
+  document.getElementById('fBudget').value='all';
+  document.getElementById('fAvail').value='all';
+  document.getElementById('fStatus').value='all';
   filter();
 }
 
-function clearPick() {
-  document.querySelectorAll('.chip[data-pick]').forEach(function(c){ c.classList.remove('active'); });
-  activePick = null;
-  phones.forEach(function(p, i) { p.cats = originalCats[i].slice(); });
-  document.getElementById('fBudget').value = 'all';
-  document.getElementById('fAvail').value = 'all';
-  document.getElementById('fStatus').value = 'all';
+function clearPick(){
+  document.querySelectorAll('.chip[data-pick]').forEach(function(c){c.classList.remove('on');});
+  activePick=null;
+  phones.forEach(function(p,i){p.cats=originalCats[i].slice();});
+  document.getElementById('fBudget').value='all';
+  document.getElementById('fAvail').value='all';
+  document.getElementById('fStatus').value='all';
   filter();
 }
 
-function filter() {
-  var budget = document.getElementById('fBudget').value;
-  var avail = document.getElementById('fAvail').value;
-  var status = document.getElementById('fStatus').value;
-  var results = document.getElementById('results');
-  results.innerHTML = '';
-
-  var nowCards = [], futureCards = [];
-
-  phones.forEach(function(p) {
-    var show = true;
-    if (budget !== 'all') {
-      if (budget === 'budget' && p.priceNum > 350) show = false;
-      if (budget === 'mid' && (p.priceNum < 350 || p.priceNum > 600)) show = false;
-      if (budget === 'high' && (p.priceNum < 600 || p.priceNum > 900)) show = false;
-      if (budget === 'premium' && p.priceNum < 900) show = false;
+function filter(){
+  var budget=document.getElementById('fBudget').value;
+  var avail=document.getElementById('fAvail').value;
+  var status=document.getElementById('fStatus').value;
+  var results=document.getElementById('results');
+  results.innerHTML='';
+  var nowCards=[],futureCards=[];
+  phones.forEach(function(p){
+    var show=true;
+    var n=getBudgetNum(p)*rates[cur];
+    var budgetThresholds={eur:[350,600,900],usd:[380,650,970],gbp:[300,520,775],cad:[515,880,1320],aud:[580,995,1490],sek:[3900,6700,10000],nok:[4000,6900,10300],chf:[340,580,870],jpy:[58000,100000,150000]};
+    var th=budgetThresholds[cur];
+    if(budget!=='all'){
+      if(budget==='budget'&&n>th[0])show=false;
+      if(budget==='mid'&&(n<th[0]||n>th[1]))show=false;
+      if(budget==='high'&&(n<th[1]||n>th[2]))show=false;
+      if(budget==='premium'&&n<th[2])show=false;
     }
-    if (avail !== 'all') {
-      if (avail === 'now' && p.avail !== 'now') show = false;
-      if (avail === 'future' && p.avail !== 'future') show = false;
+    if(avail!=='all'){
+      if(avail==='now'&&p.avail!=='now')show=false;
+      if(avail==='future'&&p.avail!=='future')show=false;
     }
-    if (status !== 'all' && p.status !== status) show = false;
-    if (activePick && !p.cats.includes('__pick__')) show = false;
-
-    if (show) {
-      if (p.avail === 'future') futureCards.push(p);
+    if(status!=='all'&&p.status!==status)show=false;
+    if(activePick&&!p.cats.includes('__pick__'))show=false;
+    if(show){
+      if(p.avail==='future')futureCards.push(p);
       else nowCards.push(p);
     }
   });
-
-  var total = nowCards.length + futureCards.length;
-  var countEl = document.getElementById('resultsCount');
-  if (total === 0) {
-    countEl.textContent = 'No devices match';
-  } else if (total === phones.length) {
-    countEl.textContent = 'Showing all ' + total + ' devices';
-  } else {
-    countEl.textContent = 'Showing ' + total + ' of ' + phones.length + ' devices';
+  var total=nowCards.length+futureCards.length;
+  var ce=document.getElementById('resultsCount');
+  ce.textContent=total===0?'No devices match':total===phones.length?'Showing all '+total+' devices':'Showing '+total+' of '+phones.length+' devices';
+  if(total===0){
+    var em=document.createElement('div');em.className='empty-state';
+    em.innerHTML='<p style="font-size:24px;margin-bottom:8px">🔍</p><p>No devices match these filters.<br>Try adjusting your selection.</p>';
+    results.appendChild(em);return;
   }
-
-  if (total === 0) {
-    var empty = document.createElement('div');
-    empty.className = 'empty-state';
-    empty.innerHTML = '<p style="font-size:24px;margin-bottom:8px">🔍</p><p>No devices match these filters.<br>Try adjusting your selection.</p>';
-    results.appendChild(empty);
-    return;
+  if(nowCards.length>0){
+    if(futureCards.length>0){var d=document.createElement('div');d.className='sec-div';d.textContent='Available now';results.appendChild(d);}
+    nowCards.forEach(function(p){results.appendChild(makeCard(p));});
   }
-
-  if (nowCards.length > 0) {
-    if (futureCards.length > 0) {
-      var d = document.createElement('div');
-      d.className = 'section-divider';
-      d.textContent = 'Available now';
-      results.appendChild(d);
-    }
-    nowCards.forEach(function(p) { results.appendChild(makeCard(p)); });
-  }
-
-  if (futureCards.length > 0) {
-    var d2 = document.createElement('div');
-    d2.className = 'section-divider';
-    d2.textContent = 'Coming in 2027 — estimated specs';
-    results.appendChild(d2);
-    futureCards.forEach(function(p) { results.appendChild(makeCard(p)); });
+  if(futureCards.length>0){
+    var d2=document.createElement('div');d2.className='sec-div';d2.textContent='Coming in 2027 — estimated specs';results.appendChild(d2);
+    futureCards.forEach(function(p){results.appendChild(makeCard(p));});
   }
 }
 
-function makeCard(p) {
-  var card = document.createElement('div');
-  card.className = 'phone-card' + (p.featured ? ' featured' : '');
-
-  var html = '';
-  if (p.rec) html += '<div class="rec-tag">' + p.rec + '</div>';
-
-  html += '<div class="card-header">';
-  html += '<div class="card-name">' + p.name + '</div>';
-  html += '<div class="card-price">' + p.price + '</div>';
-  html += '</div>';
-  html += '<div class="card-sub">' + p.sub + '</div>';
-
-  html += '<div class="badge-row">';
-  p.badges.forEach(function(b) {
-    html += '<span class="badge ' + b.c + '">' + b.t + '</span>';
-  });
-  html += '</div>';
-
-  html += '<div class="score-row"><span class="score-label">Security</span><div class="score-track"><div class="score-fill fill-blue" style="width:' + p.security + '%"></div></div><span class="score-num">' + p.security + '</span></div>';
-  html += '<div class="score-row"><span class="score-label">Support runway</span><div class="score-track"><div class="score-fill fill-green" style="width:' + p.support + '%"></div></div><span class="score-num">' + p.support + '</span></div>';
-  html += '<div class="score-row"><span class="score-label">Value</span><div class="score-track"><div class="score-fill fill-amber" style="width:' + p.value + '%"></div></div><span class="score-num">' + p.value + '</span></div>';
-
-  html += '<div class="stat-grid">';
-  html += '<div class="stat-cell"><div class="stat-label">Chip</div><div class="stat-val">' + p.stats.chip + '</div></div>';
-  html += '<div class="stat-cell"><div class="stat-label">RAM</div><div class="stat-val">' + p.stats.ram + '</div></div>';
-  html += '<div class="stat-cell"><div class="stat-label">Updates until</div><div class="stat-val">' + p.stats.updates + '</div></div>';
-  html += '<div class="stat-cell"><div class="stat-label">Screen size</div><div class="stat-val">' + p.stats.size + '</div></div>';
-  html += '</div>';
-
-  var ghLink = 'https://grapheneos.org/releases';
-  html += '<a class="ask-btn" href="' + ghLink + '" target="_blank">View on GrapheneOS.org ↗</a>';
-
-  card.innerHTML = html;
+function makeCard(p){
+  var card=document.createElement('div');
+  card.className='pcard'+(p.featured?' ft':'');
+  var h='';
+  if(p.rec)h+='<div class="rec-tag">'+p.rec+'</div>';
+  h+='<div class="ch"><div class="cn">'+p.name+'</div><div class="cp">'+getPrice(p)+'</div></div>';
+  h+='<div class="csub">'+p.sub+'</div>';
+  h+='<div class="brow">';
+  p.badges.forEach(function(b){h+='<span class="badge '+b.c+'">'+b.t+'</span>';});
+  h+='</div>';
+  h+='<div class="srow"><span class="slbl">Security</span><div class="strk"><div class="sfill fbl" style="width:'+p.security+'%"></div></div><span class="snum">'+p.security+'</span></div>';
+  h+='<div class="srow"><span class="slbl">Support runway</span><div class="strk"><div class="sfill fgn" style="width:'+p.support+'%"></div></div><span class="snum">'+p.support+'</span></div>';
+  h+='<div class="srow"><span class="slbl">Value</span><div class="strk"><div class="sfill fam" style="width:'+p.value+'%"></div></div><span class="snum">'+p.value+'</span></div>';
+  h+='<div class="sgrid">';
+  h+='<div class="sc"><div class="scl">Chip</div><div class="scv">'+p.stats.chip+'</div></div>';
+  h+='<div class="sc"><div class="scl">RAM</div><div class="scv">'+p.stats.ram+'</div></div>';
+  h+='<div class="sc"><div class="scl">Updates until</div><div class="scv">'+p.stats.updates+'</div></div>';
+  h+='<div class="sc"><div class="scl">Screen</div><div class="scv">'+p.stats.size+'</div></div>';
+  h+='</div>';
+  h+='<a class="ask-btn" href="https://grapheneos.org/releases" target="_blank">View on GrapheneOS.org ↗</a>';
+  card.innerHTML=h;
   return card;
 }
 
-// THEME
-function toggleTheme() {
-  var html = document.documentElement;
-  var isDark = html.getAttribute('data-theme') === 'dark';
-  html.setAttribute('data-theme', isDark ? 'light' : 'dark');
-  document.getElementById('themeBtn').textContent = isDark ? '🌙' : '☀️';
-  localStorage.setItem('theme', isDark ? 'light' : 'dark');
+// ── FAQ ──
+function faq(btn){
+  var a=btn.nextElementSibling;
+  var ico=btn.querySelector('.faq-ico');
+  var open=a.classList.toggle('on');
+  ico.style.transform=open?'rotate(90deg)':'rotate(0)';
 }
 
-// Init theme
-(function() {
-  var saved = localStorage.getItem('theme');
-  var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-  var theme = saved || (prefersDark ? 'dark' : 'light');
-  document.documentElement.setAttribute('data-theme', theme);
-  if (theme === 'dark') {
-    document.addEventListener('DOMContentLoaded', function() {
-      var btn = document.getElementById('themeBtn');
-      if (btn) btn.textContent = '☀️';
+// ── THEME ──
+function toggleTheme(){
+  var isDark=document.documentElement.getAttribute('data-theme')==='dark';
+  document.documentElement.setAttribute('data-theme',isDark?'light':'dark');
+  document.getElementById('themeBtn').textContent=isDark?'🌙':'☀️';
+  localStorage.setItem('theme',isDark?'light':'dark');
+}
+(function(){
+  var saved=localStorage.getItem('theme');
+  var prefersDark=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches;
+  var theme=saved||(prefersDark?'dark':'light');
+  document.documentElement.setAttribute('data-theme',theme);
+  if(theme==='dark'){
+    document.addEventListener('DOMContentLoaded',function(){
+      var b=document.getElementById('themeBtn');if(b)b.textContent='☀️';
     });
   }
 })();
 
-// Init
+// ── SMOOTH SCROLL ──
+document.querySelectorAll('a[href^="#"]').forEach(function(a){
+  a.addEventListener('click',function(e){
+    var t=document.querySelector(this.getAttribute('href'));
+    if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'});}
+  });
+});
+
 filter();
 </script>
 </body>
