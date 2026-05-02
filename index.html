@@ -133,6 +133,21 @@ body {
 
 .header-right { display: flex; align-items: center; gap: 12px; }
 
+.header-nav { display: flex; align-items: center; gap: 2px; }
+.nav-link {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-decoration: none;
+  padding: 5px 10px;
+  border-radius: var(--radius-sm);
+  transition: background 0.15s, color 0.15s;
+}
+.nav-link:hover { background: var(--bg-secondary); color: var(--text); }
+.nav-link.nav-ext { color: var(--accent); }
+.nav-link.nav-ext:hover { background: var(--accent-bg); }
+@media (max-width: 600px) { .header-nav { display: none; } }
+
 .theme-btn {
   width: 34px;
   height: 34px;
@@ -540,12 +555,214 @@ select:focus { outline: none; border-color: var(--accent); }
 .site-footer a { color: var(--accent); text-decoration: none; }
 .site-footer a:hover { text-decoration: underline; }
 
+/* INSTALL SECTION */
+.install-section {
+  background: var(--bg);
+  border-top: 1px solid var(--border);
+  padding: 4rem 1.5rem;
+  margin-top: 3rem;
+}
+
+.install-inner {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.install-hero {
+  margin-bottom: 2.5rem;
+}
+
+.install-title {
+  font-size: 26px;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  margin-bottom: 0.5rem;
+}
+
+.install-sub {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  max-width: 560px;
+}
+
+.install-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 0.9rem;
+}
+
+.ipill {
+  font-size: 12px;
+  font-weight: 500;
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+}
+
+.ipill-green { background: var(--green-bg); color: var(--green-text); }
+.ipill-blue  { background: var(--accent-bg); color: var(--accent-text); }
+.ipill-amber { background: var(--amber-bg); color: var(--amber-text); }
+
+.steps-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 1.5rem;
+}
+
+.step-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem 1.1rem;
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  transition: border-color 0.15s;
+}
+
+.step-card:hover { border-color: var(--border-strong); }
+
+.step-card-important {
+  border-color: var(--accent);
+  background: var(--accent-bg);
+}
+
+.step-num {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--bg-tertiary);
+  color: var(--text-secondary);
+  font-size: 12px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-family: var(--mono);
+}
+
+.step-num-accent {
+  background: var(--accent);
+  color: white;
+}
+
+.step-title {
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 0.3rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.critical-badge {
+  font-size: 10px;
+  font-weight: 500;
+  background: var(--accent);
+  color: white;
+  padding: 1px 7px;
+  border-radius: var(--radius-pill);
+  vertical-align: middle;
+}
+
+.step-desc {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.step-desc a { color: var(--accent); text-decoration: none; }
+.step-desc a:hover { text-decoration: underline; }
+
+.install-tips {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 2rem;
+}
+
+.tip-card {
+  border-radius: var(--radius);
+  padding: 1rem;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  border: 1px solid transparent;
+}
+
+.tip-green { background: var(--green-bg); border-color: color-mix(in srgb, var(--green) 25%, transparent); }
+.tip-blue  { background: var(--accent-bg); border-color: color-mix(in srgb, var(--accent) 25%, transparent); }
+.tip-amber { background: var(--amber-bg); border-color: color-mix(in srgb, var(--amber) 25%, transparent); }
+
+.tip-icon { font-size: 18px; flex-shrink: 0; line-height: 1; margin-top: 1px; }
+
+.tip-title {
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+}
+
+.tip-text {
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.55;
+}
+
+.tip-text a { color: var(--accent); text-decoration: none; }
+.tip-text a:hover { text-decoration: underline; }
+
+.install-cta {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.cta-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 20px;
+  background: var(--accent);
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  font-family: var(--font);
+  text-decoration: none;
+  border-radius: var(--radius-sm);
+  transition: opacity 0.15s;
+}
+.cta-btn:hover { opacity: 0.88; }
+
+.cta-btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 20px;
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 14px;
+  font-weight: 500;
+  font-family: var(--font);
+  text-decoration: none;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  transition: all 0.15s;
+}
+.cta-btn-ghost:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-bg); }
+
 /* RESPONSIVE */
 @media (max-width: 640px) {
   .filter-row { grid-template-columns: 1fr; }
   .results { grid-template-columns: 1fr; }
   .main { padding: 1.25rem 1rem 3rem; }
   .page-title { font-size: 22px; }
+  .steps-grid { grid-template-columns: 1fr; }
+  .install-tips { grid-template-columns: 1fr; }
+  .install-section { padding: 2.5rem 1rem; }
+  .install-title { font-size: 22px; }
 }
 
 /* TRANSITIONS */
@@ -567,12 +784,18 @@ body, .site-header, .filter-panel, .phone-card, select {
     </div>
   </a>
   <div class="header-right">
+    <nav class="header-nav">
+      <a href="#picker" class="nav-link">Phone Picker</a>
+      <a href="#install" class="nav-link">Install Guide</a>
+      <a href="https://grapheneos.org" target="_blank" class="nav-link nav-ext">GrapheneOS.org ↗</a>
+    </nav>
     <button class="theme-btn" id="themeBtn" title="Toggle dark mode" onclick="toggleTheme()">🌙</button>
   </div>
 </header>
 
 <main class="main">
 
+  <div id="picker"></div>
   <div class="page-hero">
     <h1 class="page-title">Find your GrapheneOS phone</h1>
     <p class="page-subtitle">Every supported device — current Pixels, older bargains, and upcoming Motorola flagships — in one place. Filter by budget, use case, or support status.</p>
@@ -641,6 +864,122 @@ body, .site-header, .filter-panel, .phone-card, select {
   <div class="results" id="results"></div>
 
 </main>
+
+</main>
+
+<!-- INSTALL GUIDE -->
+<section class="install-section" id="install">
+  <div class="install-inner">
+
+    <div class="install-hero">
+      <h2 class="install-title">How to install GrapheneOS</h2>
+      <p class="install-sub">No command line needed. The official web installer handles everything in about 15 minutes. These steps work for all supported Pixel devices.</p>
+      <div class="install-pills">
+        <span class="ipill ipill-green">✓ No technical experience required</span>
+        <span class="ipill ipill-blue">✓ Takes ~15 minutes</span>
+        <span class="ipill ipill-amber">⚠ Wipes the phone — start fresh</span>
+      </div>
+    </div>
+
+    <div class="steps-grid">
+
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <div class="step-title">Buy the right phone</div>
+          <div class="step-desc">You need an <strong>unlocked</strong> Pixel — never carrier-locked (no KPN, T-Mobile, Vodafone branding). Buy direct from the Google Store, Bol.com, or an unlocked retailer. Carrier models often have a permanently fused bootloader.</div>
+        </div>
+      </div>
+
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <div class="step-title">Enable Developer Options</div>
+          <div class="step-desc">On first boot, skip Google sign-in and connect to Wi-Fi. Then go to <code>Settings → About phone</code> and tap <strong>Build number</strong> 7 times until you see "You are now a developer." Then go to <code>Settings → System → Developer options</code> and enable <strong>OEM unlocking</strong>.</div>
+        </div>
+      </div>
+
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <div class="step-title">Open the web installer on a desktop</div>
+          <div class="step-desc">On your computer, open <a href="https://grapheneos.org/install/web" target="_blank">grapheneos.org/install/web</a> in <strong>Chrome or Edge</strong> — not Firefox (WebUSB incompatibility). Connect the phone via USB. Use the original cable or a quality USB-C cable — cheap cables cause failures.</div>
+        </div>
+      </div>
+
+      <div class="step-card">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <div class="step-title">Unlock the bootloader</div>
+          <div class="step-desc">The installer guides you through rebooting into fastboot mode. On the phone, use volume buttons to navigate and power to confirm. Accept the <strong>"Unlock bootloader?"</strong> prompt — this wipes all data. That's fine, the phone is new.</div>
+        </div>
+      </div>
+
+      <div class="step-card">
+        <div class="step-num">5</div>
+        <div class="step-body">
+          <div class="step-title">Flash GrapheneOS</div>
+          <div class="step-desc">The installer downloads the correct GrapheneOS build for your exact device and flashes it automatically. Takes 3–5 minutes. <strong>Do not unplug the phone</strong> during this step. The installer shows clear progress and will tell you when it's done.</div>
+        </div>
+      </div>
+
+      <div class="step-card step-card-important">
+        <div class="step-num step-num-accent">6</div>
+        <div class="step-body">
+          <div class="step-title">Re-lock the bootloader <span class="critical-badge">Critical</span></div>
+          <div class="step-desc">After flashing, the installer prompts you to lock the bootloader again. <strong>Always do this.</strong> Re-locking restores Verified Boot — which cryptographically checks the OS on every startup and alerts you if anything has been tampered with. This is what makes GrapheneOS more secure than other custom ROMs.</div>
+        </div>
+      </div>
+
+      <div class="step-card">
+        <div class="step-num">7</div>
+        <div class="step-body">
+          <div class="step-title">First GrapheneOS setup</div>
+          <div class="step-desc">The phone boots into GrapheneOS. Go through setup — no Google account needed at any point. Set a <strong>strong PIN or passphrase</strong> (avoid patterns). When asked about location services, choose the GrapheneOS geocoding service — not Google's.</div>
+        </div>
+      </div>
+
+      <div class="step-card">
+        <div class="step-num">8</div>
+        <div class="step-body">
+          <div class="step-title">Disable OEM unlocking again</div>
+          <div class="step-desc">Go to <code>Settings → System → Developer options</code> and turn off <strong>OEM unlocking</strong>. This prevents anyone with physical access to your phone from being able to unlock the bootloader and tamper with the OS — even if they know your PIN.</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="install-tips">
+      <div class="tip-card tip-green">
+        <div class="tip-icon">💡</div>
+        <div>
+          <div class="tip-title">Something went wrong?</div>
+          <div class="tip-text">The web installer has clear error messages and a recovery path for every failure mode. Nothing during installation can permanently damage the phone. The community forum at <a href="https://discuss.grapheneos.org" target="_blank">discuss.grapheneos.org</a> is also very responsive.</div>
+        </div>
+      </div>
+      <div class="tip-card tip-blue">
+        <div class="tip-icon">🏦</div>
+        <div>
+          <div class="tip-title">Need your banking app?</div>
+          <div class="tip-text">Create a separate user profile (Settings → System → Multiple users) and install Sandboxed Google Play there only. Your main profile stays completely Google-free. Most major banking apps work fine this way.</div>
+        </div>
+      </div>
+      <div class="tip-card tip-amber">
+        <div class="tip-icon">🔒</div>
+        <div>
+          <div class="tip-title">Key security settings after setup</div>
+          <div class="tip-text">Enable PIN scramble, set a VPN as always-on, configure auto-reboot (72h), and set USB-C to charge-only when locked. All found in Settings → Security.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="install-cta">
+      <a href="https://grapheneos.org/install/web" target="_blank" class="cta-btn">Open the web installer ↗</a>
+      <a href="https://grapheneos.org/faq" target="_blank" class="cta-btn-ghost">Read the FAQ ↗</a>
+    </div>
+
+  </div>
+</section>
 
 <footer class="site-footer">
   <p>Data accurate as of May 2026. Always verify support status at <a href="https://grapheneos.org/releases" target="_blank">grapheneos.org/releases</a> before buying.</p>
